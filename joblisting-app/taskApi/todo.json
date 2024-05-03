@@ -1,0 +1,23 @@
+{
+    "tasks":[
+        {
+            "title": "Build an app",
+            "status":"in progress",
+            "priority":"a",
+            "category":"a"
+        },
+        {
+            "title": "Do the laundry",
+            "status":"b",
+            "priority":"b",
+            "category":"b"
+        },
+        {
+            "title": "Meet with friend",
+            "status":"c",
+            "priority":"c",
+            "category":"c"
+        }
+        
+    ]
+}

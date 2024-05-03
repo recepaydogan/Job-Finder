@@ -1,26 +1,22 @@
 import MyContext from "../Context";
 import "react-toastify/dist/ReactToastify.css";
-import { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import { useContext } from "react";
 import "react-toastify/dist/ReactToastify.css";
-const CustomToast = ({ setJobCardVisibility }) => {
-  const { toastNotification } = useContext(MyContext);
+const CustomToast = () => {
+  const { toastNotification, setHiddenJobs } = useContext(MyContext);
+  console.log(toastNotification);
+  // toastNotification could be an array of objects fix that
   const currentToast = toastNotification[0];
-  const [undoVisibility, setUndoVisibility] = useState(
-    currentToast ? currentToast.visibility : true
-  );
-  console.log("currentToast", currentToast);
-  console.log("toastNotification", toastNotification);
+  console.log(currentToast);
   const toggleJobVisibility = () => {
-    localStorage.setItem(
-      `job-${currentToast.id}-visibility`,
-      JSON.stringify(!currentToast.visibility)
-    );
-    setUndoVisibility(!currentToast.visible);
+    const isJobHidden = JSON.parse(localStorage.getItem("hiddenJobs"));
+    const filteredHiddenJobs = isJobHidden.filter((job) => {
+      return job.id !== currentToast.id;
+    });
+    localStorage.setItem("hiddenJobs", JSON.stringify(filteredHiddenJobs));
+    setHiddenJobs(filteredHiddenJobs);
   };
-  useEffect(() => {
-    setJobCardVisibility(undoVisibility);
-  }, [undoVisibility, setJobCardVisibility]);
+
   return (
     <div className="flex items-center justify-center gap-3">
       <div className="flex flex-col justify-center">
@@ -40,7 +36,5 @@ const CustomToast = ({ setJobCardVisibility }) => {
     </div>
   );
 };
-CustomToast.propTypes = {
-  setJobCardVisibility: PropTypes.func.isRequired,
-};
+
 export default CustomToast;

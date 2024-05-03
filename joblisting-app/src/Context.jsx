@@ -11,6 +11,7 @@ function Provider({ children }) {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [toastNotification, setToastNotification] = useState([]);
   const [likedJobs, setLikedJobs] = useState([]);
+  const [hiddenJobs, setHiddenJobs] = useState([]);
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get("http://localhost:3000/cards");
@@ -22,20 +23,41 @@ function Provider({ children }) {
   useEffect(() => {
     fetchData();
     setLikedJobs(JSON.parse(localStorage.getItem("likedJobs")) || []);
+    setHiddenJobs(JSON.parse(localStorage.getItem("hiddenJobs")) || []);
   }, [fetchData]);
   const handleFormChange = (newFormData) => {
     setFormData(newFormData);
   };
 
   const handleToastNotification = (message, visibility, id) => {
-    setToastNotification([{ message, visibility, id }]);
+    setToastNotification([...toastNotification, { message, visibility, id }]);
   };
   useEffect(() => {
-    setDisplayedJobs(FormData.showFavorites ? likedJobs : jobs);
-  }, [FormData.showFavorites, jobs, likedJobs]);
+    let newDisplayedJobs = jobs;
+
+    if (FormData.showFavorites) {
+      newDisplayedJobs = likedJobs;
+    } else if (FormData.showHiddenJobs) {
+      newDisplayedJobs = hiddenJobs;
+    }
+
+    setDisplayedJobs(newDisplayedJobs);
+  }, [
+    FormData.showFavorites,
+    jobs,
+    likedJobs,
+    FormData.showHiddenJobs,
+    hiddenJobs,
+  ]);
 
   useEffect(() => {
     const filteredJobs = displayedJobs.filter((job) => {
+      if (
+        hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id) &&
+        !FormData.showHiddenJobs
+      ) {
+        return false;
+      }
       if (
         FormData.title &&
         !job.jobTitle.toLowerCase().includes(FormData.title.toLowerCase())
@@ -74,7 +96,7 @@ function Provider({ children }) {
       return true;
     });
     setFilteredJobs(filteredJobs);
-  }, [FormData, displayedJobs]);
+  }, [FormData, displayedJobs, hiddenJobs, FormData.showFavorites]);
   const sharedDatas = {
     handleFormChange,
     filteredJobs,
@@ -83,6 +105,8 @@ function Provider({ children }) {
     toastNotification,
     likedJobs,
     setLikedJobs,
+    hiddenJobs,
+    setHiddenJobs,
   };
 
   return (

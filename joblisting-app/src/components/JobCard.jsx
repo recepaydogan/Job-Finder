@@ -11,48 +11,56 @@ import MyContext from "../Context";
 import CustomToast from "./CustomUndo";
 
 function JobCard({ job }) {
-  const storedJobVisibility = localStorage.getItem(`job-${job.id}-visibility`);
-  const { FormData, handleToastNotification, likedJobs, setLikedJobs } =
-    useContext(MyContext);
+  const {
+    FormData,
+    handleToastNotification,
+    likedJobs,
+    setLikedJobs,
+    setHiddenJobs,
+    hiddenJobs,
+  } = useContext(MyContext);
   const [showHiddenJobs, setShowHiddenJobs] = useState(FormData.showHidden);
-  const [jobVisibility, setJobVisibility] = useState(
-    storedJobVisibility === null ? true : JSON.parse(storedJobVisibility)
+  const [isJobHidden, setIsJobHidden] = useState(
+    hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id) || false
   );
 
   useEffect(() => {
-    localStorage.setItem(
-      `job-${job.id}-visibility`,
-      JSON.stringify(jobVisibility)
-    );
     if (FormData) {
       setShowHiddenJobs(FormData.showHiddenJobs);
     }
-  }, [jobVisibility, job.id, FormData]);
+  }, [job.id, FormData]);
 
   const toggleVisibility = () => {
-    const newVisibility = !jobVisibility;
-    setJobVisibility(newVisibility);
-    handleToastNotification(
-      `${job.jobTitle} is no longer be shown`,
-      newVisibility,
-      job.id
-    );
+    const isItHidden = hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id);
+
+    if (!isItHidden) {
+      setHiddenJobs([...hiddenJobs, job]);
+    } else if (isItHidden) {
+      const newHiddenJobs = hiddenJobs.filter(
+        (hiddenJob) => hiddenJob.id !== job.id
+      );
+      setHiddenJobs(newHiddenJobs);
+    }
+    handleToastProcess();
+  };
+  const handleToastProcess = () => {
+    const newVisibility = isJobHidden;
 
     if (!newVisibility) {
-      toast(<CustomToast setJobCardVisibility={setJobCardVisibility} />);
+      handleToastNotification(
+        `${job.jobTitle} is no longer be shown`,
+        newVisibility,
+        job.id
+      );
+      toast(<CustomToast />);
     } else {
       toast.dismiss();
     }
-  };
-  const setJobCardVisibility = (visibility) => {
-    setJobVisibility(visibility);
   };
   const toggleLikedJobs = () => {
     const jobExists = likedJobs.some((likedJob) => likedJob.id === job.id);
 
     if (!jobExists) {
-      // If the job is liked and does not exist in likedJobs, add it
-
       setLikedJobs([...likedJobs, job]);
     } else if (jobExists) {
       const newLikedJobs = likedJobs.filter(
@@ -67,17 +75,30 @@ function JobCard({ job }) {
       setLikedJobs(JSON.parse(storedLikedJobs));
     }
   }, []);
+  useEffect(() => {
+    const storedHiddenJobs = localStorage.getItem("hiddenJobs");
+    if (storedHiddenJobs) {
+      setHiddenJobs(JSON.parse(storedHiddenJobs));
+    }
+  }, [setHiddenJobs]);
 
   useEffect(() => {
     localStorage.setItem("likedJobs", JSON.stringify(likedJobs));
   }, [likedJobs]);
+  useEffect(() => {
+    localStorage.setItem("hiddenJobs", JSON.stringify(hiddenJobs));
+  }, [hiddenJobs]);
+  useEffect(() => {
+    setIsJobHidden(hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id));
+  }, [hiddenJobs, job.id]);
+
   return (
     <>
       <div
         className={`${
-          jobVisibility || showHiddenJobs ? "flex" : "hidden text-gray-400"
+          !isJobHidden || showHiddenJobs ? "flex" : "hidden text-gray-400"
         } ${
-          !jobVisibility ? "text-gray-400" : ""
+          isJobHidden ? "text-gray-400" : ""
         } select-none flex-col py-3 px-4  border-white/10 rounded-xl border-[1px] dark:border-slate-950`}
       >
         <div className="flex items-center  justify-between ">
@@ -87,7 +108,7 @@ function JobCard({ job }) {
               className="cursor-pointer flex justify-center items-center  size-12 hover:bg-white/10 rounded-full dark:hover:bg-slate-950 dark:hover:text-white"
               onClick={toggleVisibility}
             >
-              {jobVisibility ? (
+              {!isJobHidden ? (
                 <FaRegEye size={20} />
               ) : (
                 <FaRegEyeSlash size={20} />
@@ -111,7 +132,7 @@ function JobCard({ job }) {
         </div>
         <div className="flex text-xs gap-2 items-center justify-start my-2">
           <div className="bg-slate-800 cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
-            {job.salary}
+            {Number(job.salary).toLocaleString()}
           </div>
           <div className="bg-slate-800 cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
             {job.type}
@@ -121,6 +142,7 @@ function JobCard({ job }) {
           </div>
         </div>
         <div className="py-8">{job.description}</div>
+        <div>{isJobHidden ? "true" : "false"}</div>
       </div>
     </>
   );

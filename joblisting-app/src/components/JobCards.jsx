@@ -8,7 +8,6 @@ function JobCards() {
 
   return (
     <>
-      {" "}
       <div className="flex flex-col sm:grid gap-4 grid-cols-[repeat(auto-fill,minmax(400px,1fr))] mt-12 ">
         {filteredJobs.map((job, key) => (
           <JobCard job={job} key={key} />

@@ -4,22 +4,22 @@
       "id": "1",
       "title": "Build an app",
       "status": "In Progress",
-      "priority": "high",
-      "category": "a"
+      "priority": "High",
+      "category": "Work"
     },
     {
       "id": "2",
       "title": "Do the laundry",
-      "status": "In Progress",
-      "priority": "low",
-      "category": "b"
+      "status": "Todo",
+      "priority": "Low",
+      "category": "Personal"
     },
     {
       "id": "3",
       "title": "Meet with friend",
       "status": "Done",
-      "priority": "medium",
-      "category": "c"
+      "priority": "Medium",
+      "category": "Work"
     }
   ]
 }

@@ -8,22 +8,14 @@ import { FcLike } from "react-icons/fc";
 import { CiHeart } from "react-icons/ci";
 
 import MyContext from "../Context";
-import CustomToast from "./CustomUndo";
 
 function JobCard({ job }) {
-  const {
-    FormData,
-    handleToastNotification,
-    likedJobs,
-    setLikedJobs,
-    setHiddenJobs,
-    hiddenJobs,
-  } = useContext(MyContext);
+  const { FormData, likedJobs, setLikedJobs, setHiddenJobs, hiddenJobs } =
+    useContext(MyContext);
   const [showHiddenJobs, setShowHiddenJobs] = useState(FormData.showHidden);
   const [isJobHidden, setIsJobHidden] = useState(
     hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id) || false
   );
-
   useEffect(() => {
     if (FormData) {
       setShowHiddenJobs(FormData.showHiddenJobs);
@@ -47,15 +39,35 @@ function JobCard({ job }) {
     const newVisibility = isJobHidden;
 
     if (!newVisibility) {
-      handleToastNotification(
-        `${job.jobTitle} is no longer be shown`,
-        newVisibility,
-        job.id
+      toast(
+        <div className="flex items-center justify-center py-3 px-2 gap-5 ">
+          <div className="flex flex-col justify-center">
+            <div className="font-semibold text-slate-950 dark:text-white ">
+              Job is hidden
+            </div>
+            <div className="text-slate-700 text-sm dark:text-white ">
+              {job.jobTitle} is no longer be shown
+            </div>
+          </div>
+          <div className="">
+            <button
+              onClick={() => undoJobVisibility(job.id)}
+              className="bg-white text-gray-900 text-nowrap h-10 px-3 py-1 rounded-md"
+            >
+              Undo
+            </button>
+          </div>
+        </div>
       );
-      toast(<CustomToast />);
-    } else {
-      toast.dismiss();
     }
+  };
+  const undoJobVisibility = (id) => {
+    const getHiddenJobs = JSON.parse(localStorage.getItem("hiddenJobs"));
+    const filteredHiddenJobs = getHiddenJobs.filter((job) => {
+      return job.id !== id;
+    });
+    localStorage.setItem("hiddenJobs", JSON.stringify(filteredHiddenJobs));
+    setHiddenJobs(filteredHiddenJobs);
   };
   const toggleLikedJobs = () => {
     const jobExists = likedJobs.some((likedJob) => likedJob.id === job.id);

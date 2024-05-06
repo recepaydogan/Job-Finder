@@ -44,7 +44,7 @@ function App() {
             position="bottom-right"
             autoClose={5000}
             hideProgressBar
-            newestOnTop={false}
+            newestOnTop={true}
             closeOnClick
             rtl={false}
             pauseOnFocusLoss
@@ -52,8 +52,8 @@ function App() {
             pauseOnHover
             limit={3}
             theme={theme ? "dark" : "light"}
-            transition:Bounce
-          ></ToastContainer>{" "}
+            transition:Slide
+          />{" "}
         </div>
       </div>
     </>

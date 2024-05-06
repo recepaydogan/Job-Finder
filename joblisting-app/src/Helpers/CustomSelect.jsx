@@ -41,7 +41,7 @@ function CustomSelect({ options, defaultValue, onSelectChange }) {
       >
         {options.map((option, index) => (
           <div
-            className=" w-full dark:border-gray-950 dark:text-black dark:hover:bg-gray-100 hover:bg-slate-900  text-white border-b-2   px-4 py-3 rounded-lg "
+            className=" w-full dark:border-gray-950 dark:text-black dark:hover:bg-gray-100 hover:bg-slate-900  text-white border-b-2   px-3 py-1 rounded-lg "
             key={index}
             onClick={() => {
               setSelectedOption(option);
@@ -49,7 +49,7 @@ function CustomSelect({ options, defaultValue, onSelectChange }) {
             }}
           >
             {option === selectedOption ? (
-              <span className="text-green-500">✔ {option}</span>
+              <span className="">✔ {option}</span>
             ) : (
               option
             )}

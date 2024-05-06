@@ -37,8 +37,6 @@ function Provider({ children }) {
 
     if (FormData.showFavorites) {
       newDisplayedJobs = likedJobs;
-    } else if (FormData.showHiddenJobs) {
-      newDisplayedJobs = hiddenJobs;
     }
 
     setDisplayedJobs(newDisplayedJobs);

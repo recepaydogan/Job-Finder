@@ -9,7 +9,6 @@ function Provider({ children }) {
   const [jobs, setJobs] = useState([]);
   const [displayedJobs, setDisplayedJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
-  const [toastNotification, setToastNotification] = useState([]);
   const [likedJobs, setLikedJobs] = useState([]);
   const [hiddenJobs, setHiddenJobs] = useState([]);
   const fetchData = useCallback(async () => {
@@ -20,6 +19,7 @@ function Provider({ children }) {
       console.log(error.message);
     }
   }, []);
+  // Fetch data from the API and set the jobs state
   useEffect(() => {
     fetchData();
     setLikedJobs(JSON.parse(localStorage.getItem("likedJobs")) || []);
@@ -28,11 +28,8 @@ function Provider({ children }) {
   const handleFormChange = (newFormData) => {
     setFormData(newFormData);
   };
-
-  const handleToastNotification = (message, visibility, id) => {
-    setToastNotification([...toastNotification, { message, visibility, id }]);
-  };
-  useEffect(() => {
+  // Filter jobs based on the form data
+  -useEffect(() => {
     let newDisplayedJobs = jobs;
 
     if (FormData.showFavorites) {
@@ -47,7 +44,7 @@ function Provider({ children }) {
     FormData.showHiddenJobs,
     hiddenJobs,
   ]);
-
+  // Filter jobs based on the form data
   useEffect(() => {
     const filteredJobs = displayedJobs.filter((job) => {
       if (
@@ -99,8 +96,7 @@ function Provider({ children }) {
     handleFormChange,
     filteredJobs,
     FormData,
-    handleToastNotification,
-    toastNotification,
+
     likedJobs,
     setLikedJobs,
     hiddenJobs,

@@ -2,24 +2,23 @@
 import { useState, useEffect } from "react";
 import { CiDark } from "react-icons/ci";
 import { CiLight } from "react-icons/ci";
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
-function Header({ isDark }) {
+function Header() {
   const [dark, setDark] = useState(false);
-
+  // Check if dark mode is enabled and set the theme
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     const theme = storedTheme ? JSON.parse(storedTheme) : false;
     setDark(theme);
-    isDark(theme);
+
     if (theme) {
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
     }
   }, []);
-
+  // Handle dark mode toggle
   const handleDarkMode = () => {
     const newDark = !dark;
     setDark(newDark);
@@ -29,10 +28,9 @@ function Header({ isDark }) {
       document.body.classList.remove("dark");
     }
     localStorage.setItem("theme", JSON.stringify(newDark));
-    isDark(newDark);
   };
   return (
-    <div>
+    <>
       <div className="flex justify-around items-center select-none border-b py-2">
         <h1 className="text-xl">Job Listing App</h1>
         <nav>
@@ -72,10 +70,8 @@ function Header({ isDark }) {
           </ul>
         </nav>
       </div>
-    </div>
+    </>
   );
 }
-Header.propTypes = {
-  isDark: PropTypes.func.isRequired,
-};
+
 export default Header;

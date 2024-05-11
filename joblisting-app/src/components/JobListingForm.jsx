@@ -12,7 +12,7 @@ function JobListingForm() {
     showHiddenJobs: false,
     showFavorites: false,
   });
-
+  // Handle form change
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
 
@@ -20,19 +20,22 @@ function JobListingForm() {
       return { ...prev, [name]: value || checked };
     });
   };
+  // Handle job type change
   const handleJobTypeChange = useCallback((value) => {
     setFormData((prev) => ({ ...prev, jobType: value }));
   }, []);
-
+  // Handle experience level change
   const handleExperinceLevelChange = useCallback((value) => {
     setFormData((prev) => ({ ...prev, experienceLevel: value }));
   }, []);
+  // Handle checkbox change
   const handleCheckBoxChange = (e) => {
     const { name, checked } = e.target;
     setFormData((prev) => {
       return { ...prev, [name]: checked };
     });
   };
+  // Handle form change
   useEffect(() => {
     handleFormChange(FormData);
   }, [FormData, handleFormChange]);

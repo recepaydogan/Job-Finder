@@ -19,12 +19,13 @@ function CustomSelect({ options, defaultValue, onSelectChange }) {
     };
   }, []);
   useEffect(() => {
-    if (selectedOption) {
+    if (selectedOption && onSelectChange) {
       onSelectChange(selectedOption);
     }
-  }, [selectedOption, onSelectChange, defaultValue]);
+  }, [selectedOption, onSelectChange]);
+
   return (
-    <div ref={selectRef} className=" relative select-none cursor-pointer">
+    <div ref={selectRef} className=" relative mt-2 select-none cursor-pointer">
       <div
         onClick={() => setSelecting(!selecting)}
         className="dark:text-black dark:border-slate-950  dark:hover:bg-gray-100 flex  w-full  justify-between  text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
@@ -41,7 +42,7 @@ function CustomSelect({ options, defaultValue, onSelectChange }) {
       >
         {options.map((option, index) => (
           <div
-            className=" w-full dark:border-gray-950 dark:text-black dark:hover:bg-gray-100 hover:bg-slate-900  text-white border-b-2   px-3 py-1 rounded-lg "
+            className=" w-full dark:border-gray-950 dark:text-black dark:hover:bg-gray-100 hover:bg-slate-900  text-white border-b-[1px]   px-3 py-1 rounded-lg "
             key={index}
             onClick={() => {
               setSelectedOption(option);
@@ -49,9 +50,12 @@ function CustomSelect({ options, defaultValue, onSelectChange }) {
             }}
           >
             {option === selectedOption ? (
-              <span className="">✔ {option}</span>
+              <div className="relative">
+                <span className="absolute">✔</span>{" "}
+                <p className="pl-6">{option}</p>
+              </div>
             ) : (
-              option
+              <p className="pl-6">{option}</p>
             )}
           </div>
         ))}

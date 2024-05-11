@@ -1,24 +1,17 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Build an app",
-      "status": "In Progress",
-      "priority": "High",
-      "category": "Work"
-    },
-    {
-      "id": "2",
-      "title": "Do the laundry",
+      "id": "80f9",
+      "title": "Wash the dishes",
       "status": "Todo",
-      "priority": "Low",
+      "priority": "Medium",
       "category": "Personal"
     },
     {
-      "id": "3",
-      "title": "Meet with friend",
-      "status": "Done",
-      "priority": "Medium",
+      "id": "8f32",
+      "title": "Finish the project",
+      "status": "In Progress",
+      "priority": "High",
       "category": "Work"
     }
   ]

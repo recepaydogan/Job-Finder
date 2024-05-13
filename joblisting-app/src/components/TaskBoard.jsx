@@ -16,6 +16,8 @@ import { RiExpandUpDownFill } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
 import AddTask from "./AddTask";
 import { LuPlus } from "react-icons/lu";
+import useAuth from "../authContexts/AuthContext";
+import { toast } from "react-toastify";
 
 function TaskBoard() {
   const [taskDetails, setTaskDetails] = useState([]);
@@ -28,6 +30,7 @@ function TaskBoard() {
   const [selectedRow, setselectedRow] = useState();
   const [openTaskForm, setOpenTaskForm] = useState(false);
   const dropDownMenuRef = useRef();
+  const { userLoggedIn } = useAuth();
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("http://localhost:3003/tasks");
@@ -161,20 +164,32 @@ function TaskBoard() {
 
       <div className="w-full pb-32 bg-slate-950 relative items-center gap-10 justify-center dark:bg-white">
         <div className=" w-2/3 mx-auto max-md:w-11/12">
-          <div className="flex text-sm items-center justify-around pb-4">
+          <div className="flex text-sm items-center justify-around pb-4 select-none">
             <button
               onClick={resetTable}
               className="bg-slate-900 transition-all cursor-pointer  px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95 dark:bg-gray-200 dark:hover:text-white dark:hover:bg-slate-950"
             >
               Reset the Sorted Table
             </button>
-            <button
-              onClick={() => setOpenTaskForm(!openTaskForm)}
-              className="flex gap-2 transition-all items-center justify-center bg-slate-900 cursor-pointer  px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95  dark:bg-gray-200 dark:hover:text-white dark:hover:bg-slate-950"
-            >
-              <LuPlus />
-              Add Task
-            </button>
+            {userLoggedIn ? (
+              <button
+                onClick={() => setOpenTaskForm(!openTaskForm)}
+                className="flex gap-2 transition-all items-center justify-center bg-slate-900 cursor-pointer  px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95  dark:bg-gray-200 dark:hover:text-white dark:hover:bg-slate-950"
+              >
+                <LuPlus />
+                Add Task
+              </button>
+            ) : (
+              <span
+                onClick={() => {
+                  toast.error("You need to login to add a task");
+                }}
+                className="flex gap-2 transition-all items-center justify-center bg-slate-900 cursor-pointer  px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95  dark:bg-gray-200 dark:hover:text-white dark:hover:bg-slate-950"
+              >
+                <LuPlus />
+                Add Task
+              </span>
+            )}
             {openTaskForm && (
               <div className="fixed top-0 left-0 bg-gray-900/90 w-full h-full z-10 flex items-center justify-center">
                 <AddTask

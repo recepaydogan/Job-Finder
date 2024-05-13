@@ -19,6 +19,7 @@ function Provider({ children }) {
       console.log(error.message);
     }
   }, []);
+
   // Fetch data from the API and set the jobs state
   useEffect(() => {
     fetchData();
@@ -65,10 +66,7 @@ function Provider({ children }) {
       ) {
         return false;
       }
-      if (
-        FormData.minSalary &&
-        parseInt(job.salary) < parseInt(FormData.minSalary)
-      ) {
+      if (FormData.salary && parseInt(job.salary) < parseInt(FormData.salary)) {
         return false;
       }
       if (
@@ -96,11 +94,11 @@ function Provider({ children }) {
     handleFormChange,
     filteredJobs,
     FormData,
-
     likedJobs,
     setLikedJobs,
     hiddenJobs,
     setHiddenJobs,
+    fetchData,
   };
 
   return (

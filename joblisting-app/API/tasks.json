@@ -1,18 +1,11 @@
 {
   "tasks": [
     {
-      "id": "80f9",
-      "title": "Wash the dishes",
-      "status": "Todo",
+      "id": "020a",
+      "title": "Finish the project",
+      "status": "Done",
       "priority": "Medium",
       "category": "Personal"
-    },
-    {
-      "id": "8f32",
-      "title": "Finish the project",
-      "status": "In Progress",
-      "priority": "High",
-      "category": "Work"
     }
   ]
 }

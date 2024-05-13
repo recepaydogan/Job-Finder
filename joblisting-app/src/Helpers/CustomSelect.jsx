@@ -2,10 +2,17 @@
 import { useEffect, useRef, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 
-function CustomSelect({ options, defaultValue, onSelectChange }) {
+function CustomSelect({
+  options,
+  defaultValue,
+  onSelectChange,
+  onChange,
+  name,
+}) {
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const [selecting, setSelecting] = useState(false);
   const selectRef = useRef();
+  // Close the dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(e) {
       if (!selectRef.current.contains(e.target)) {
@@ -18,6 +25,16 @@ function CustomSelect({ options, defaultValue, onSelectChange }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  // Handle the change of the selected option -- For the job Creation form
+  const handleChange = (value) => {
+    onChange({
+      target: {
+        name: name,
+        value: value !== "Any" ? value : "",
+      },
+    });
+  };
+  // Update the parent component when the selected option changes -- For filtering Jobs and others
   useEffect(() => {
     if (selectedOption && onSelectChange) {
       onSelectChange(selectedOption);
@@ -28,7 +45,7 @@ function CustomSelect({ options, defaultValue, onSelectChange }) {
     <div ref={selectRef} className=" relative mt-2 select-none cursor-pointer">
       <div
         onClick={() => setSelecting(!selecting)}
-        className="dark:text-black dark:border-slate-950  dark:hover:bg-gray-100 flex  w-full  justify-between  text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+        className="dark:text-black dark:border-slate-950  dark:hover:bg-gray-100 flex  w-full  justify-between  text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
       >
         {selectedOption}
         <IoMdArrowDropdown />
@@ -47,6 +64,7 @@ function CustomSelect({ options, defaultValue, onSelectChange }) {
             onClick={() => {
               setSelectedOption(option);
               setSelecting(false);
+              handleChange(option);
             }}
           >
             {option === selectedOption ? (

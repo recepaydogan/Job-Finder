@@ -51,7 +51,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
           console.log(field, value);
         }}
       >
-        {(props) => {
+        {({ setFieldValue, touched, errors, handleChange, values }) => {
           return (
             <div
               ref={taskCreatingRef}
@@ -68,12 +68,12 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                   <div>
                     <label className="pl-2">Title</label>
                     <input
-                      className="w-full mt-2  dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="w-full mt-2  dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="text"
                       name="title"
-                      onChange={props.handleChange}
+                      onChange={handleChange}
                     />{" "}
-                    {props.errors.title && props.touched.title ? (
+                    {errors.title && touched.title ? (
                       <p className="text-red-400 pl-2">
                         <ErrorMessage name="title" />
                       </p>
@@ -84,16 +84,16 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                     <label className="pl-2">Status</label>
                     <Field
                       name="status"
-                      defaultValue="Select Status"
-                      options={["Todo", "In Progress", "Done"]}
-                      component={CustomSelect}
-                      onSelectChange={(value) => {
-                        value !== "Select Status"
-                          ? (props.values.status = value)
-                          : (props.values.status = "");
+                      defaultValue="Any"
+                      options={["Any", "Todo", "In Progress", "Done"]}
+                      as={CustomSelect}
+                      onChange={(event) => {
+                        console.log(event);
+                        const value = event.target.value;
+                        setFieldValue("status", value);
                       }}
                     />
-                    {props.errors.status && props.touched.status ? (
+                    {errors.status && touched.status ? (
                       <p className="text-red-400 pl-2">
                         <ErrorMessage name="status" />
                       </p>
@@ -103,37 +103,35 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                     <label className="pl-2">Priority</label>
                     <Field
                       name="priority"
-                      defaultValue="Select Priority"
-                      options={["High", "Medium", "Low"]}
-                      component={CustomSelect}
-                      onSelectChange={(value) => {
-                        value !== "Select Priority"
-                          ? (props.values.priority = value)
-                          : (props.values.priority = "");
+                      defaultValue="Any"
+                      options={["Any", "High", "Medium", "Low"]}
+                      as={CustomSelect}
+                      onChange={(event) => {
+                        console.log(event);
+                        const value = event.target.value;
+                        setFieldValue("priority", value);
                       }}
                     />{" "}
-                    {props.errors.priority && props.touched.priority ? (
+                    {errors.priority && touched.priority ? (
                       <p className="text-red-400 pl-2">
                         <ErrorMessage name="priority" />
                       </p>
                     ) : null}
                   </div>
                   <div>
-                    {console.log(props.values)}
                     <label className="pl-2">Category</label>
                     <Field
                       name="category"
-                      defaultValue="Select Category"
-                      options={["Personal", "Work"]}
-                      component={CustomSelect}
-                      handleChange={props.handleChange}
-                      onSelectChange={(value) => {
-                        value !== "Select Category"
-                          ? (props.values.category = value)
-                          : (props.values.category = "");
+                      defaultValue="Any"
+                      options={["Any", "Personal", "Work"]}
+                      as={CustomSelect}
+                      onChange={(event) => {
+                        console.log(event);
+                        const value = event.target.value;
+                        setFieldValue("category", value);
                       }}
                     />
-                    {props.errors.category && props.touched.category ? (
+                    {errors.category && touched.category ? (
                       <p className="text-red-400 pl-2">
                         <ErrorMessage name="category" />
                       </p>

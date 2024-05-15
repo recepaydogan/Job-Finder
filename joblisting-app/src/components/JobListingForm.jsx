@@ -6,7 +6,7 @@ function JobListingForm() {
   const [FormData, setFormData] = useState({
     title: "",
     location: "",
-    minSalary: "",
+    salary: "",
     jobType: "",
     experienceLevel: "",
     showHiddenJobs: false,
@@ -66,7 +66,7 @@ function JobListingForm() {
         <div className="flex flex-col gap-1 w-full">
           <label className="font-semibold">Min. Salary</label>
           <input
-            name="minSalary"
+            name="salary"
             onChange={handleChange}
             placeholder="Search for a min. salary"
             className="dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"

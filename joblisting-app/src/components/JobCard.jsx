@@ -102,7 +102,6 @@ function JobCard({ job }) {
   useEffect(() => {
     setIsJobHidden(hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id));
   }, [hiddenJobs, job.id]);
-
   return (
     <>
       <div
@@ -137,7 +136,6 @@ function JobCard({ job }) {
             </span>
           </div>
         </div>
-        <div className="text-sm text-gray-400">{job.company}</div>
         <div className="text-sm text-gray-400 dark:text-gray-800">
           {job.location}
         </div>

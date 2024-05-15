@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 const firebaseConfig = {
-  apiKey: "AIzaSyA9H-0YbSH0VOnIz6lzy1qUQ3yBzzE9-cU",
+  apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
   authDomain: "job-finder-f4fb4.firebaseapp.com",
   projectId: "job-finder-f4fb4",
   storageBucket: "job-finder-f4fb4.appspot.com",

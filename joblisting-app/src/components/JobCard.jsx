@@ -21,7 +21,7 @@ function JobCard({ job }) {
       setShowHiddenJobs(FormData.showHiddenJobs);
     }
   }, [job.id, FormData]);
-
+  // Hide or show job card
   const toggleVisibility = () => {
     const isItHidden = hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id);
 
@@ -35,6 +35,7 @@ function JobCard({ job }) {
     }
     handleToastProcess();
   };
+  // Toast notification
   const handleToastProcess = () => {
     const newVisibility = isJobHidden;
 
@@ -42,14 +43,10 @@ function JobCard({ job }) {
       toast(
         <div className="flex items-center justify-center py-3 px-2 gap-5 ">
           <div className="flex flex-col justify-center">
-            <div className="font-semibold text-slate-950 dark:text-white ">
-              Job is hidden
-            </div>
-            <div className="text-slate-700 text-sm dark:text-white ">
-              {job.jobTitle} is no longer be shown
-            </div>
+            <div className="font-semibold">Job is hidden</div>
+            <div className=" text-sm">{job.jobTitle} is no longer be shown</div>
           </div>
-          <div className="">
+          <div>
             <button
               onClick={() => undoJobVisibility(job.id)}
               className="bg-white text-gray-900 text-nowrap h-10 px-3 py-1 rounded-md"
@@ -61,6 +58,7 @@ function JobCard({ job }) {
       );
     }
   };
+  // Undo hidden job
   const undoJobVisibility = (id) => {
     const getHiddenJobs = JSON.parse(localStorage.getItem("hiddenJobs"));
     const filteredHiddenJobs = getHiddenJobs.filter((job) => {
@@ -81,12 +79,13 @@ function JobCard({ job }) {
       setLikedJobs(newLikedJobs);
     }
   };
+  // lOCAL STORAGE FOR LIKED JOBS AND HIDDEN JOBS
   useEffect(() => {
     const storedLikedJobs = localStorage.getItem("likedJobs");
     if (storedLikedJobs) {
       setLikedJobs(JSON.parse(storedLikedJobs));
     }
-  }, []);
+  }, [setLikedJobs]);
   useEffect(() => {
     const storedHiddenJobs = localStorage.getItem("hiddenJobs");
     if (storedHiddenJobs) {
@@ -103,7 +102,6 @@ function JobCard({ job }) {
   useEffect(() => {
     setIsJobHidden(hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id));
   }, [hiddenJobs, job.id]);
-
   return (
     <>
       <div
@@ -138,7 +136,6 @@ function JobCard({ job }) {
             </span>
           </div>
         </div>
-        <div className="text-sm text-gray-400">{job.company}</div>
         <div className="text-sm text-gray-400 dark:text-gray-800">
           {job.location}
         </div>
@@ -154,7 +151,6 @@ function JobCard({ job }) {
           </div>
         </div>
         <div className="py-8">{job.description}</div>
-        <div>{isJobHidden ? "true" : "false"}</div>
       </div>
     </>
   );

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { RiArrowUpSLine } from "react-icons/ri";
 import { IoPersonSharp } from "react-icons/io5";
 import { PiSuitcaseSimpleDuotone } from "react-icons/pi";
 import { HiMiniArrowSmallLeft } from "react-icons/hi2";
@@ -14,6 +13,11 @@ import DropdownCategoryMenu from "../Helpers/DropdownCategoryMenu";
 import DropdownPriorityMenu from "../Helpers/DropdownPriorityMenu";
 import DropdownStatusMenu from "../Helpers/DropdownStatusMenu";
 import { RiExpandUpDownFill } from "react-icons/ri";
+import { motion, AnimatePresence } from "framer-motion";
+import AddTask from "./AddTask";
+import { LuPlus } from "react-icons/lu";
+import useAuth from "../authContexts/AuthContext";
+import { toast } from "react-toastify";
 
 function TaskBoard() {
   const [taskDetails, setTaskDetails] = useState([]);
@@ -24,7 +28,9 @@ function TaskBoard() {
   const [openPriorityMenu, setOpenPriorityMenu] = useState(false);
   const [openCategoryMenu, setOpenCategoryMenu] = useState(false);
   const [selectedRow, setselectedRow] = useState();
+  const [openTaskForm, setOpenTaskForm] = useState(false);
   const dropDownMenuRef = useRef();
+  const { userLoggedIn } = useAuth();
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("http://localhost:3003/tasks");
@@ -69,7 +75,7 @@ function TaskBoard() {
     }
   };
   const resetTable = () => {
-    setResetSorting((prev) => !prev);
+    setResetSorting(!resetSorting);
     console.log("clicked");
   };
   useEffect(() => {
@@ -141,172 +147,237 @@ function TaskBoard() {
     setOpenCategoryMenu(menuName === "category" && !openCategoryMenu);
   };
   const handleDeleteTask = (id) => {
-    // axios.delete(`http://localhost:3003/tasks/${id}`);
+    axios.delete(`http://localhost:3003/tasks/${id}`);
     setTaskDetails(taskDetails.filter((task) => task.id !== id));
+    setOpenRow(null);
+  };
+  const handleTaskCreating = (task) => {
+    axios.post("http://localhost:3003/tasks", task);
+    setTaskDetails([...taskDetails, task]);
+    setOpenTaskForm(false);
   };
   return (
     <>
       {openRow !== null && (
-        <div className="fixed top-0 left-0 w-full h-full z-10" />
+        <div className="fixed top-0 left-0 w-full h-full  z-10" />
       )}
-      <div className="flex flex-col container w-full  items-center gap-10 justify-center">
-        <button
-          onClick={resetTable}
-          className="bg-white text-slate-950 cursor-pointer disabled:cursor-not-allowed px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95"
-        >
-          Reset the Sorted Table
-        </button>
-        <table className="table-auto w-full   border border-gray-800">
-          <thead>
-            <tr>
-              <th onClick={() => handleSortFieldChange("title")}>
-                <div className="flex items-center justify-start gap-3 px-4 py-2 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
-                  <span>Title </span> <RiExpandUpDownFill />
-                </div>
-              </th>
-              <th onClick={() => handleSortFieldChange("status")}>
-                <div className="flex justify-start items-center gap-3 px-4 py-2 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
-                  <span>Status</span> <RiExpandUpDownFill />
-                </div>
-              </th>
-              <th onClick={() => handleStatusSorting("priority")}>
-                <div className="flex justify-start items-center gap-3 px-4 py-2 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
-                  <span>Priority</span>
-                  <RiExpandUpDownFill />
-                </div>
-              </th>
-              <th
-                onClick={() => {
-                  handleSortFieldChange("category");
-                  console.log("clicked");
-                }}
+
+      <div className="w-full pb-32 bg-slate-950 relative items-center gap-10 justify-center dark:bg-white">
+        <div className=" w-2/3 mx-auto max-md:w-11/12">
+          <div className="flex text-sm items-center justify-around pb-4 select-none">
+            <button
+              onClick={resetTable}
+              className="bg-slate-900 transition-all cursor-pointer  px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95 dark:bg-gray-200 dark:hover:text-white dark:hover:bg-slate-950"
+            >
+              Reset the Sorted Table
+            </button>
+            {userLoggedIn ? (
+              <button
+                onClick={() => setOpenTaskForm(!openTaskForm)}
+                className="flex gap-2 transition-all items-center justify-center bg-slate-900 cursor-pointer  px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95  dark:bg-gray-200 dark:hover:text-white dark:hover:bg-slate-950"
               >
-                <div className="flex justify-start items-center gap-3 px-4 py-4 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
-                  <span>Category</span> <RiExpandUpDownFill />
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="relative">
-            {taskDetails.map((task, index) => (
-              <tr className="border" key={index}>
-                <td>
-                  <div className="flex items-center justify-start py-5 pl-3 gap-3 text-nowrap">
-                    {task.title}
-                  </div>
-                </td>
-                <td>
-                  <div className="flex items-center  justify-start py-5 pl-3 gap-3">
-                    {task.status === "In Progress" ? (
-                      <MdOutlineTimer />
-                    ) : task.status === "Done" ? (
-                      <FaRegSquareCheck />
-                    ) : (
-                      <FaRegSquare />
-                    )}
-                    <p>{task.status}</p>
-                  </div>
-                </td>
-                <td>
-                  <div className="flex items-center  justify-start py-5 pl-3 gap-3">
-                    {task.priority === "High" ? (
-                      <HiMiniArrowSmallUp size={20} />
-                    ) : task.priority === "Medium" ? (
-                      <HiMiniArrowSmallLeft size={20} />
-                    ) : (
-                      <HiMiniArrowSmallDown size={20} />
-                    )}
-                    {task.priority}
-                  </div>
-                </td>
-                <td>
-                  <div className="flex items-center pl-3  py-5 justify-start gap-3">
-                    {task.category === "Personal" ? (
-                      <IoPersonSharp />
-                    ) : (
-                      <PiSuitcaseSimpleDuotone />
-                    )}
-                    <p>{task.category}</p>
-                  </div>
-                </td>
-                <td className="relative">
-                  <div className="flex  justify-start items-center text-xl pr-3">
-                    <button
+                <LuPlus />
+                Add Task
+              </button>
+            ) : (
+              <span
+                onClick={() => {
+                  toast.error("You need to login to add a task");
+                }}
+                className="flex gap-2 transition-all items-center justify-center bg-slate-900 cursor-pointer  px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95  dark:bg-gray-200 dark:hover:text-white dark:hover:bg-slate-950"
+              >
+                <LuPlus />
+                Add Task
+              </span>
+            )}
+            {openTaskForm && (
+              <div className="fixed top-0 left-0 bg-gray-900/90 w-full h-full z-10 flex items-center justify-center">
+                <AddTask
+                  setOpenTaskForm={setOpenTaskForm}
+                  onsubmit={handleTaskCreating}
+                />
+              </div>
+            )}
+          </div>
+          {taskDetails.length === 0 ? (
+            <p className="flex justify-center items-center">
+              No tasks available. Please add tasks by clicking on the Add Task
+            </p>
+          ) : (
+            <div className="w-full border-gray-800 rounded-3xl">
+              <table className="w-full caption-bottom table-fixed border ">
+                <thead>
+                  <tr>
+                    <th onClick={() => handleSortFieldChange("title")}>
+                      <div className="transition-all flex items-center justify-start gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
+                        <span>Title </span> <RiExpandUpDownFill />
+                      </div>
+                    </th>
+                    <th onClick={() => handleSortFieldChange("status")}>
+                      <div className="transition-all flex justify-start items-center gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
+                        <span>Status</span> <RiExpandUpDownFill />
+                      </div>
+                    </th>
+                    <th onClick={() => handleStatusSorting("priority")}>
+                      <div className="transition-all flex justify-start items-center gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
+                        <span>Priority</span>
+                        <RiExpandUpDownFill />
+                      </div>
+                    </th>
+                    <th
                       onClick={() => {
-                        handleSelectingRow(index);
+                        handleSortFieldChange("category");
                       }}
                     >
-                      ...
-                    </button>
-                  </div>
-                  {openRow === index && (
-                    <div
-                      ref={dropDownMenuRef}
-                      className="absolute select-none w-36 z-50 -left-40 top-10 text-slate-200 bg-slate-950 border border-white/50  rounded-lg"
+                      <div className="transition-all flex justify-start items-center gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
+                        <span>Category</span> <RiExpandUpDownFill />
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="relative ">
+                  {taskDetails.map((task, index) => (
+                    <tr
+                      className="border border-gray-800 text-sm hover:bg-slate-900 dark:hover:text-white"
+                      key={index}
                     >
-                      <ul className="flex justify-around w-full py-2 gap-2 flex-col  ">
-                        <li
-                          onClick={() => {
-                            handleOpenMenu("status");
-                          }}
-                          className="px-2 text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between"
-                        >
-                          Status <HiMiniArrowSmallRight />
-                          {openStatusMenu && (
-                            <DropdownStatusMenu
-                              handleStatusChange={handleStatusChange}
-                              selectedRow={selectedRow}
-                            />
+                      <td>
+                        <div className="flex items-center justify-start py-5 pl-3 gap-3 text-nowrap">
+                          {task.title}
+                        </div>
+                      </td>
+                      <td>
+                        <div className="flex items-center  justify-start py-5 pl-3 gap-3">
+                          {task.status === "In Progress" ? (
+                            <MdOutlineTimer />
+                          ) : task.status === "Done" ? (
+                            <FaRegSquareCheck />
+                          ) : (
+                            <FaRegSquare />
                           )}
-                        </li>
-                        <li
-                          onClick={() => {
-                            handleOpenMenu("priority");
-                          }}
-                          className=" px-2 text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between"
-                        >
-                          Priority <HiMiniArrowSmallRight />
-                          {openPriorityMenu && (
-                            <DropdownPriorityMenu
-                              selectedRow={selectedRow}
-                              handlePriorityChange={handlePriorityChange}
-                            />
+                          <p>{task.status}</p>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="flex items-center  justify-start py-5 pl-3 gap-3">
+                          {task.priority === "High" ? (
+                            <HiMiniArrowSmallUp size={20} />
+                          ) : task.priority === "Medium" ? (
+                            <HiMiniArrowSmallLeft size={20} />
+                          ) : (
+                            <HiMiniArrowSmallDown size={20} />
                           )}
-                        </li>
-                        <li
-                          onClick={() => {
-                            handleOpenMenu("category");
-                          }}
-                          className="border-b px-2 text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between "
-                        >
-                          Category <HiMiniArrowSmallRight />
-                          {openCategoryMenu && (
-                            <DropdownCategoryMenu
-                              selectedRow={selectedRow}
-                              handleCategoryChange={handleCategoryChange}
-                            />
+                          {task.priority}
+                        </div>
+                      </td>
+                      <td>
+                        <div className="flex items-center pl-3  py-5 justify-start gap-3">
+                          {task.category === "Personal" ? (
+                            <IoPersonSharp />
+                          ) : (
+                            <PiSuitcaseSimpleDuotone />
                           )}
-                        </li>
-                        <li className=" px-2  text-nowrap  hover:bg-slate-800 cursor-pointer  ">
-                          Edit
-                        </li>
-                        <li
-                          onClick={() => {
-                            handleDeleteTask(task.id);
-                          }}
-                          className=" px-2 text-nowrap  hover:bg-slate-800 cursor-pointer "
-                        >
-                          Delete
-                        </li>{" "}
-                      </ul>
-                    </div>
-                  )}{" "}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div></div>
+                          <p>{task.category}</p>
+                        </div>
+                      </td>
+                      <td className="relative">
+                        <div className="flex justify-start text-xl">
+                          <button
+                            className="hover:bg-slate-800 rounded-lg px-3 h-10 w-10  flex items-start justify-center"
+                            onClick={() => {
+                              handleSelectingRow(index);
+                            }}
+                          >
+                            ...
+                          </button>
+                        </div>
+                        <AnimatePresence>
+                          {" "}
+                          {openRow === index && (
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              ref={dropDownMenuRef}
+                              className="absolute  select-none w-36 z-50 -left-36 top-10 text-slate-200 bg-slate-950 border border-white/10  rounded-lg"
+                            >
+                              <ul className="flex justify-around w-full flex-col">
+                                <li
+                                  onMouseEnter={() => {
+                                    handleOpenMenu("status");
+                                  }}
+                                  onMouseLeave={() => {
+                                    setOpenStatusMenu(false);
+                                  }}
+                                  className="px-3 py-1 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between"
+                                >
+                                  Status <HiMiniArrowSmallRight />
+                                  {openStatusMenu && (
+                                    <DropdownStatusMenu
+                                      handleStatusChange={handleStatusChange}
+                                      selectedRow={selectedRow}
+                                    />
+                                  )}
+                                </li>
+                                <li
+                                  onMouseEnter={() => {
+                                    handleOpenMenu("priority");
+                                  }}
+                                  onMouseLeave={() => {
+                                    setOpenPriorityMenu(false);
+                                  }}
+                                  className="px-3 py-1 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between"
+                                >
+                                  Priority <HiMiniArrowSmallRight />
+                                  {openPriorityMenu && (
+                                    <DropdownPriorityMenu
+                                      selectedRow={selectedRow}
+                                      handlePriorityChange={
+                                        handlePriorityChange
+                                      }
+                                    />
+                                  )}
+                                </li>
+                                <li
+                                  onMouseEnter={() => {
+                                    handleOpenMenu("category");
+                                  }}
+                                  onMouseLeave={() => {
+                                    setOpenCategoryMenu(false);
+                                  }}
+                                  className="px-3 py-1 border-b border-white/30 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between "
+                                >
+                                  Category <HiMiniArrowSmallRight />
+                                  {openCategoryMenu && (
+                                    <DropdownCategoryMenu
+                                      selectedRow={selectedRow}
+                                      handleCategoryChange={
+                                        handleCategoryChange
+                                      }
+                                    />
+                                  )}
+                                </li>
+                                <li
+                                  onClick={() => {
+                                    handleDeleteTask(task.id);
+                                  }}
+                                  className="px-3 py-2 text-nowrap hover:bg-slate-800 cursor-pointer "
+                                >
+                                  Delete
+                                </li>{" "}
+                              </ul>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

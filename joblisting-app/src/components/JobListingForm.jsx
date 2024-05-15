@@ -6,13 +6,13 @@ function JobListingForm() {
   const [FormData, setFormData] = useState({
     title: "",
     location: "",
-    minSalary: "",
+    salary: "",
     jobType: "",
     experienceLevel: "",
     showHiddenJobs: false,
     showFavorites: false,
   });
-
+  // Handle form change
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
 
@@ -20,19 +20,22 @@ function JobListingForm() {
       return { ...prev, [name]: value || checked };
     });
   };
+  // Handle job type change
   const handleJobTypeChange = useCallback((value) => {
     setFormData((prev) => ({ ...prev, jobType: value }));
   }, []);
-
+  // Handle experience level change
   const handleExperinceLevelChange = useCallback((value) => {
     setFormData((prev) => ({ ...prev, experienceLevel: value }));
   }, []);
+  // Handle checkbox change
   const handleCheckBoxChange = (e) => {
     const { name, checked } = e.target;
     setFormData((prev) => {
       return { ...prev, [name]: checked };
     });
   };
+  // Handle form change
   useEffect(() => {
     handleFormChange(FormData);
   }, [FormData, handleFormChange]);
@@ -63,7 +66,7 @@ function JobListingForm() {
         <div className="flex flex-col gap-1 w-full">
           <label className="font-semibold">Min. Salary</label>
           <input
-            name="minSalary"
+            name="salary"
             onChange={handleChange}
             placeholder="Search for a min. salary"
             className="dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"

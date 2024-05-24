@@ -7,7 +7,8 @@ import { useContext, useEffect, useState } from "react";
 import { FcLike } from "react-icons/fc";
 import { CiHeart } from "react-icons/ci";
 
-import MyContext from "../Context";
+import MyContext from "../../Context";
+import JobDetails from "./JobDetails";
 
 function JobCard({ job }) {
   const { FormData, likedJobs, setLikedJobs, setHiddenJobs, hiddenJobs } =
@@ -16,6 +17,7 @@ function JobCard({ job }) {
   const [isJobHidden, setIsJobHidden] = useState(
     hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id) || false
   );
+  const [showJobDetails, setShowJobDetails] = useState(false);
   useEffect(() => {
     if (FormData) {
       setShowHiddenJobs(FormData.showHiddenJobs);
@@ -102,8 +104,14 @@ function JobCard({ job }) {
   useEffect(() => {
     setIsJobHidden(hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id));
   }, [hiddenJobs, job.id]);
+
   return (
     <>
+      {showJobDetails && (
+        <div className="fixed top-0 backdrop-blur  left-0  w-full h-full">
+          <JobDetails job={job} setShowJobDetails={setShowJobDetails} />
+        </div>
+      )}
       <div
         className={`${
           !isJobHidden || showHiddenJobs ? "flex" : "hidden text-gray-400"
@@ -137,6 +145,9 @@ function JobCard({ job }) {
           </div>
         </div>
         <div className="text-sm text-gray-400 dark:text-gray-800">
+          {job.company}
+        </div>
+        <div className="text-sm text-gray-400 dark:text-gray-800">
           {job.location}
         </div>
         <div className="flex text-xs gap-2 items-center justify-start my-2">
@@ -150,7 +161,15 @@ function JobCard({ job }) {
             {job.experienceLevel}
           </div>
         </div>
-        <div className="py-8">{job.description}</div>
+        <div className="py-4">{job.description}</div>
+        <div
+          onClick={() => setShowJobDetails(true)}
+          className="flex w-full justify-end"
+        >
+          <button className="dark:text-white text-sm border border-white/10 px-6 select-none py-1 rounded-md bg-slate-900 hover:bg-slate-800 transition-all">
+            Details
+          </button>
+        </div>
       </div>
     </>
   );

@@ -1,58 +1,38 @@
 {
   "cards": [
     {
-      "jobTitle": "Senior Web Developer",
-      "salary": "200000",
-      "experienceLevel": "Senior",
-      "location": "Remote",
-      "type": "Full-Time",
-      "description": "Netflix is looking for a Senior Web Developer to join our team.!",
-      "id": "1"
-    },
-    {
-      "jobTitle": "Software Engineer",
-      "salary": "100000",
-      "experienceLevel": "Junior",
-      "location": "Mountain View, CA",
-      "type": "Full-Time",
-      "description": "Netflix is looking for a Senior Web Developer to join our team.",
-      "id": "2"
-    },
-    {
-      "jobTitle": "Google Engineer",
-      "salary": "150000",
-      "experienceLevel": "Senior",
-      "location": "Mountain View, CA",
-      "type": "Part-Time",
-      "description": "Netflix is looking for a Senior Web Developer to join our tea1m. ",
-      "id": "3"
-    },
-    {
-      "id": "cdbe",
-      "jobTitle": "Backend Developer",
-      "salary": 30000,
-      "experienceLevel": "Junior",
-      "type": "Full-Time",
-      "location": "Remote",
-      "description": "We are looking for a Backend developer that can work with .net mvc"
-    },
-    {
-      "id": "6d34",
-      "jobTitle": "Frontend Team Leader",
-      "salary": 150000,
-      "experienceLevel": "Junior",
-      "type": "Full-Time",
-      "location": "Istanbul",
-      "description": "We are looking for a Front end Team Leader with 6 years experience. Details are below the card"
-    },
-    {
-      "id": "db04",
-      "jobTitle": "React Developer ",
-      "salary": 35000,
+      "id": "ce70",
+      "jobTitle": "Frontend Developer",
+      "salary": 200000,
       "experienceLevel": "Junior",
       "type": "Internship",
       "location": "Remote",
-      "description": "We are hiring intern junior React developers"
+      "description": "We are hiring intern junior React developers",
+      "company": "Meta"
+    },
+    {
+      "id": "637a",
+      "jobTitle": "Frontend Developer",
+      "salary": 20000,
+      "experienceLevel": "Junior",
+      "type": "Internship",
+      "location": "Remote",
+      "description": "we are looking for a junior react developer",
+      "company": "Meta",
+      "applicationUrl": "https://www.d.",
+      "longDescription": "If you are interested in the field of frontend and good at communication with colleagues please visit our application URL"
+    },
+    {
+      "id": "0f4e",
+      "jobTitle": "Backend Developer",
+      "salary": 200000,
+      "experienceLevel": "Senior",
+      "type": "Full-Time",
+      "location": "Remote",
+      "description": "sdfşljhklfdskhşldfsdjhlkfdsjkhljdfsklhjfsldhj",
+      "company": "Netflix",
+      "applicationUrl": "https://www.chrome.com",
+      "longDescription": "sdfşlhjdfslkhlfdskjhkldfsjhkldfsjhlkdfsjkhljdfsklhjsfldkhjsklfjh"
     }
   ]
 }

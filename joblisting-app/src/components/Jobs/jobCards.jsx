@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
-import JobCard from "./JobCard";
-import MyContext from "../Context";
+import JobCard from "./jobCard";
+import MyContext from "../../Context";
 
 function JobCards() {
   const { filteredJobs } = useContext(MyContext);

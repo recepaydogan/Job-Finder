@@ -11,9 +11,8 @@ import { IoMdArrowDropdown } from "react-icons/io";
 function Header() {
   const navigate = useNavigate();
   const { userLoggedIn, user, setLoading, loading } = useAuth();
-  console.log(user);
   const [dark, setDark] = useState(false);
-  const [openUserMenu, setOpenUserMenu] = useState(null);
+  const [openUserMenu, setOpenUserMenu] = useState(false);
   // Check if dark mode is enabled and set the theme
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
@@ -38,20 +37,21 @@ function Header() {
     localStorage.setItem("theme", JSON.stringify(newDark));
   };
   const handleLogOut = async () => {
+    setOpenUserMenu(false);
     setLoading(true);
     await signOutUser().then(() => {
       navigate("/log-in");
     });
     setTimeout(() => {
       setLoading(false);
-    }, 10000);
+    }, 3000);
   };
   const userMenu = () => {
     setOpenUserMenu(!openUserMenu);
   };
   return (
     <>
-      <div className="flex justify-around items-center select-none border-b py-2">
+      <div className="flex justify-around items-center  select-none border-b  py-2">
         <h1 className="text-xl">Job Listing App</h1>
         <nav>
           <ul
@@ -83,12 +83,12 @@ function Header() {
               className="dark:hover:bg-slate-950 dark:hover:text-white active:scale-95 font-semibold px-3 py-2 rounded-lg cursor-pointer hover:ring-1  hover:bg-slate-700   outline-none "
               to="/todo-list"
             >
-              Job List
+              Task List
             </NavLink>
             {userLoggedIn ? (
               <div className="relative ">
                 <button
-                  className="min-w-[245px]  flex items-center justify-center bg-slate-950 px-3 py-2 rounded-md hover:bg-slate-900 transition-colors"
+                  className="min-w-[245px] dark:bg-white dark:text-black dark:hover:bg-slate-900 dark:hover:text-white  flex items-center justify-center bg-slate-950 px-3 py-2 rounded-md hover:bg-slate-900 transition-colors"
                   onClick={userMenu}
                 >
                   {user ? (
@@ -109,7 +109,7 @@ function Header() {
                   )}
                 </button>
                 {openUserMenu && (
-                  <div className="absolute w-full ">
+                  <div className="absolute w-full z-50 ">
                     <button
                       className="w-full bg-slate-200 text-black flex items-center justify-center px-3 py-1 mt-1 rounded-md "
                       onClick={handleLogOut}

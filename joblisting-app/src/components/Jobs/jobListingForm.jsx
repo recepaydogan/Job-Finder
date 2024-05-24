@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import CustomSelect from "../Helpers/CustomSelect";
-import MyContext from "../Context";
+import CustomSelect from "../../Helpers/customSelect";
+import MyContext from "../../Context";
 function JobListingForm() {
   const { handleFormChange } = useContext(MyContext);
   const [FormData, setFormData] = useState({
@@ -11,6 +11,7 @@ function JobListingForm() {
     experienceLevel: "",
     showHiddenJobs: false,
     showFavorites: false,
+    company: "",
   });
   // Handle form change
   const handleChange = (e) => {
@@ -50,6 +51,16 @@ function JobListingForm() {
             onChange={handleChange}
             placeholder="Search for a job title"
             className="dark:border-gray-950 dark:text-black  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+            type="text"
+          />
+        </div>
+        <div className="flex flex-col gap-1 w-full">
+          <label className="font-semibold">Company</label>
+          <input
+            name="company"
+            onChange={handleChange}
+            placeholder="Search for a location"
+            className="dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="text"
           />
         </div>

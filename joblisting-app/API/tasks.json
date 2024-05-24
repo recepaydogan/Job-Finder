@@ -1,11 +1,3 @@
 {
-  "tasks": [
-    {
-      "id": "020a",
-      "title": "Finish the project",
-      "status": "Done",
-      "priority": "Medium",
-      "category": "Personal"
-    }
-  ]
+  "tasks": []
 }

@@ -45,7 +45,7 @@ function CustomSelect({
     <div ref={selectRef} className=" relative mt-2 select-none cursor-pointer">
       <div
         onClick={() => setSelecting(!selecting)}
-        className="dark:text-black dark:border-slate-950  dark:hover:bg-gray-100 flex  w-full  justify-between  text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+        className=" dark:border-slate-950 dark:bg-slate-900  flex  w-full  justify-between  text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
       >
         {selectedOption}
         <IoMdArrowDropdown />

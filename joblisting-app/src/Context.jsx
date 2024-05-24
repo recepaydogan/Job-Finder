@@ -61,6 +61,12 @@ function Provider({ children }) {
         return false;
       }
       if (
+        FormData.company &&
+        !job.company.toLowerCase().includes(FormData.company.toLowerCase())
+      ) {
+        return false;
+      }
+      if (
         FormData.location &&
         !job.location.toLowerCase().includes(FormData.location.toLowerCase())
       ) {

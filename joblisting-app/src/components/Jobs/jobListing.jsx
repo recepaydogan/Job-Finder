@@ -1,4 +1,4 @@
-import JobListingForm from "./JobListingForm";
+import JobListingForm from "./jobListingForm";
 
 function JobListing() {
   return (

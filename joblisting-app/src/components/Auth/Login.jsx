@@ -1,12 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Formik } from "formik";
-import {
-  signIn,
-  signInWithGoogle,
-  resetPassword,
-} from "../../../firebase/auth.js";
-import useAuth from "../../../authContexts/AuthContext";
-import { Navigate } from "react-router-dom";
+import { signIn, signInWithGoogle } from "../../firebase/auth.js";
+import useAuth from "../../authContexts/AuthContext.jsx";
+import { NavLink, Navigate } from "react-router-dom";
 function Login() {
   const { userLoggedIn } = useAuth();
 
@@ -29,8 +25,8 @@ function Login() {
       {({ handleChange, handleSubmit, values }) => {
         return (
           <>
-            {userLoggedIn && <Navigate to="/"></Navigate>}
-            <div className="w-full h-[85%] flex-col mt-40  flex justify-center items-center ">
+            {userLoggedIn && <Navigate to="/" />}
+            <div className="w-full h-[85%] flex-col mt-40  flex justify-center items-center dark:text-white ">
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-col w-2/5 py-8 px-10 bg-slate-900 max-sm:w-10/12 max-lg:w-2/4 max-xl:w-2/4 rounded-lg "
@@ -38,7 +34,7 @@ function Login() {
                 <h1 className="text-center text-2xl">Log in</h1>
                 <label>Email</label>
                 <input
-                  className="w-full mt-2  dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                  className="w-full mt-2  dark:border-gray-950 dark:text-white   bg-transparent text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                   type="email"
                   value={values.email}
                   name="email"
@@ -47,7 +43,7 @@ function Login() {
                 <label className="mt-3">Password</label>
                 <input
                   autoComplete="off"
-                  className="w-full mt-2  dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                  className="w-full mt-2  dark:border-gray-950 dark:text-white   bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                   type="password"
                   value={values.password}
                   name="password"
@@ -67,15 +63,15 @@ function Login() {
                   Log in with Google
                 </button>
                 <div className="flex justify-between items-center select-none">
-                  <a className="underline mt-10 pb-0 mb-0" href="/register">
+                  <NavLink className="underline mt-10 pb-0 mb-0" to="/register">
                     I don't have an account
-                  </a>
-                  <a
+                  </NavLink>
+                  <NavLink
                     className="underline mt-10 pb-0 mb-0 cursor-pointer"
-                    onClick={() => resetPassword(values.email)}
+                    to={"/reset-password"}
                   >
                     Reset Password
-                  </a>
+                  </NavLink>
                 </div>
               </form>
             </div>

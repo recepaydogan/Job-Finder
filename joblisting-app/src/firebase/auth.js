@@ -15,10 +15,9 @@ export const signUp = async (email, password) => {
     email,
     password
   );
-  const user = userCredential.user;
+  const user = userCredential;
   return user;
 };
-
 export const signIn = async (email, password) => {
   const userCredential = await signInWithEmailAndPassword(
     auth,
@@ -40,7 +39,7 @@ export const signOutUser = async () => {
 export const resetPassword = async (email) => {
   if (email) {
     await sendPasswordResetEmail(auth, email);
-    console.log("Password reset email sent!");
+    toast("Password reset email sent!");
   } else {
     toast.error("Please enter your email");
   }

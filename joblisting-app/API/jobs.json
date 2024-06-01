@@ -1,58 +1,28 @@
 {
   "cards": [
     {
-      "jobTitle": "Senior Web Developer",
-      "salary": "200000",
-      "experienceLevel": "Senior",
-      "location": "Remote",
-      "type": "Full-Time",
-      "description": "Netflix is looking for a Senior Web Developer to join our team.!",
-      "id": "1"
-    },
-    {
-      "jobTitle": "Software Engineer",
-      "salary": "100000",
-      "experienceLevel": "Junior",
-      "location": "Mountain View, CA",
-      "type": "Full-Time",
-      "description": "Netflix is looking for a Senior Web Developer to join our team.",
-      "id": "2"
-    },
-    {
-      "jobTitle": "Google Engineer",
-      "salary": "150000",
-      "experienceLevel": "Senior",
-      "location": "Mountain View, CA",
-      "type": "Part-Time",
-      "description": "Netflix is looking for a Senior Web Developer to join our tea1m. ",
-      "id": "3"
-    },
-    {
-      "id": "cdbe",
-      "jobTitle": "Backend Developer",
-      "salary": 30000,
-      "experienceLevel": "Junior",
+      "id": "3135",
+      "jobTitle": "React Developer",
+      "salary": 50000,
+      "experienceLevel": "Middle",
       "type": "Full-Time",
       "location": "Remote",
-      "description": "We are looking for a Backend developer that can work with .net mvc"
+      "description": "we are looking for a React developer with 3 years of experience",
+      "company": "Google",
+      "applicationUrl": "https://www.example.com/",
+      "longDescription": "LoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLorem"
     },
     {
-      "id": "6d34",
-      "jobTitle": "Frontend Team Leader",
-      "salary": 150000,
+      "id": "bc38",
+      "jobTitle": ".... Developer",
+      "salary": 40000,
       "experienceLevel": "Junior",
       "type": "Full-Time",
-      "location": "Istanbul",
-      "description": "We are looking for a Front end Team Leader with 6 years experience. Details are below the card"
-    },
-    {
-      "id": "db04",
-      "jobTitle": "React Developer ",
-      "salary": 35000,
-      "experienceLevel": "Junior",
-      "type": "Internship",
-      "location": "Remote",
-      "description": "We are hiring intern junior React developers"
+      "location": ".....",
+      "description": "...................",
+      "company": "....",
+      "applicationUrl": "https://www.example.com",
+      "longDescription": "............................................."
     }
   ]
 }

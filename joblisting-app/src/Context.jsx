@@ -19,7 +19,6 @@ function Provider({ children }) {
       console.log(error.message);
     }
   }, []);
-
   // Fetch data from the API and set the jobs state
   useEffect(() => {
     fetchData();
@@ -30,7 +29,7 @@ function Provider({ children }) {
     setFormData(newFormData);
   };
   // Filter jobs based on the form data
-  -useEffect(() => {
+  useEffect(() => {
     let newDisplayedJobs = jobs;
 
     if (FormData.showFavorites) {
@@ -61,6 +60,12 @@ function Provider({ children }) {
         return false;
       }
       if (
+        FormData.company &&
+        !job.company.toLowerCase().includes(FormData.company.toLowerCase())
+      ) {
+        return false;
+      }
+      if (
         FormData.location &&
         !job.location.toLowerCase().includes(FormData.location.toLowerCase())
       ) {
@@ -70,9 +75,9 @@ function Provider({ children }) {
         return false;
       }
       if (
-        FormData.jobType &&
-        FormData.jobType !== "Any" &&
-        !job.type.toLowerCase().includes(FormData.jobType.toLowerCase())
+        FormData.type &&
+        FormData.type !== "Any" &&
+        !job.type.toLowerCase().includes(FormData.type.toLowerCase())
       ) {
         return false;
       }

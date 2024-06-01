@@ -9,20 +9,20 @@ import { HiMiniArrowSmallUp } from "react-icons/hi2";
 import { FaRegSquare } from "react-icons/fa6";
 import { FaRegSquareCheck } from "react-icons/fa6";
 import { MdOutlineTimer } from "react-icons/md";
-import DropdownCategoryMenu from "../Helpers/DropdownCategoryMenu";
-import DropdownPriorityMenu from "../Helpers/DropdownPriorityMenu";
-import DropdownStatusMenu from "../Helpers/DropdownStatusMenu";
+import DropdownCategoryMenu from "../../Helpers/dropdownCategoryMenu";
+import DropdownPriorityMenu from "../../Helpers/dropdownPriorityMenu";
+import DropdownStatusMenu from "../../Helpers/dropdownStatusMenu";
 import { RiExpandUpDownFill } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
-import AddTask from "./AddTask";
+import AddTask from "./addTask";
 import { LuPlus } from "react-icons/lu";
-import useAuth from "../authContexts/AuthContext";
+import useAuth from "../../authContexts/AuthContext";
 import { toast } from "react-toastify";
 
 function TaskBoard() {
   const [taskDetails, setTaskDetails] = useState([]);
-  const [isSorted, setIsSorted] = useState(false);
-  const [resetSorting, setResetSorting] = useState(false);
+  const [isFieldSorted, setIsFieldSorted] = useState(false);
+  const [resetTaskTable, setResetTaskTable] = useState(false);
   const [openRow, setOpenRow] = useState(null);
   const [openStatusMenu, setOpenStatusMenu] = useState(false);
   const [openPriorityMenu, setOpenPriorityMenu] = useState(false);
@@ -37,10 +37,11 @@ function TaskBoard() {
       setTaskDetails(response.data);
     };
     fetchData();
-  }, [resetSorting]);
+  }, [resetTaskTable]);
+
   const handleSortFieldChange = (field) => {
-    const isDataSortedBefore = !isSorted;
-    setIsSorted(isDataSortedBefore);
+    const isDataSortedBefore = !isFieldSorted;
+    setIsFieldSorted(isDataSortedBefore);
     if (isDataSortedBefore) {
       const sortedData = [...taskDetails].sort((a, b) =>
         b[field].localeCompare(a[field])
@@ -54,8 +55,8 @@ function TaskBoard() {
     }
   };
   const handleStatusSorting = (field) => {
-    const isDataSorted = !isSorted;
-    setIsSorted(isDataSorted);
+    const isDataSorted = !isFieldSorted;
+    setIsFieldSorted(isDataSorted);
 
     const priorityValues = {
       High: 3,
@@ -75,8 +76,7 @@ function TaskBoard() {
     }
   };
   const resetTable = () => {
-    setResetSorting(!resetSorting);
-    console.log("clicked");
+    setResetTaskTable(false);
   };
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -92,8 +92,8 @@ function TaskBoard() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  const handleStatusChange = (status) => {
-    axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
+  const handleStatusChange = async (status) => {
+    await axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
       ...selectedRow,
       status: status,
     });
@@ -107,8 +107,8 @@ function TaskBoard() {
     );
     setOpenRow(null);
   };
-  const handlePriorityChange = (priority) => {
-    axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
+  const handlePriorityChange = async (priority) => {
+    await axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
       ...selectedRow,
       priority: priority,
     });
@@ -122,8 +122,8 @@ function TaskBoard() {
     );
     setOpenRow(null);
   };
-  const handleCategoryChange = (category) => {
-    axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
+  const handleCategoryChange = async (category) => {
+    await axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
       ...selectedRow,
       category: category,
     });
@@ -146,24 +146,33 @@ function TaskBoard() {
     setOpenPriorityMenu(menuName === "priority" && !openPriorityMenu);
     setOpenCategoryMenu(menuName === "category" && !openCategoryMenu);
   };
-  const handleDeleteTask = (id) => {
-    axios.delete(`http://localhost:3003/tasks/${id}`);
+  const handleDeleteTask = async (id) => {
+    await axios.delete(`http://localhost:3003/tasks/${id}`);
     setTaskDetails(taskDetails.filter((task) => task.id !== id));
     setOpenRow(null);
   };
-  const handleTaskCreating = (task) => {
-    axios.post("http://localhost:3003/tasks", task);
+  const handleTaskCreating = async (task) => {
+    await axios.post("http://localhost:3003/tasks", task);
     setTaskDetails([...taskDetails, task]);
     setOpenTaskForm(false);
+    setResetTaskTable(!resetTaskTable);
   };
+
   return (
     <>
       {openRow !== null && (
         <div className="fixed top-0 left-0 w-full h-full  z-10" />
       )}
-
-      <div className="w-full pb-32 bg-slate-950 relative items-center gap-10 justify-center dark:bg-white">
-        <div className=" w-2/3 mx-auto max-md:w-11/12">
+      {openTaskForm && (
+        <div className="fixed top-0 left-0 backdrop-blur w-full h-full z-10 flex items-center justify-center">
+          <AddTask
+            setOpenTaskForm={setOpenTaskForm}
+            onsubmit={handleTaskCreating}
+          />
+        </div>
+      )}
+      <main className="w-full pb-32 bg-slate-950 relative items-center gap-10 justify-center dark:bg-white">
+        <section className=" w-2/3 mx-auto max-md:w-11/12">
           <div className="flex text-sm items-center justify-around pb-4 select-none">
             <button
               onClick={resetTable}
@@ -173,7 +182,7 @@ function TaskBoard() {
             </button>
             {userLoggedIn ? (
               <button
-                onClick={() => setOpenTaskForm(!openTaskForm)}
+                onClick={() => setOpenTaskForm(true)}
                 className="flex gap-2 transition-all items-center justify-center bg-slate-900 cursor-pointer  px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95  dark:bg-gray-200 dark:hover:text-white dark:hover:bg-slate-950"
               >
                 <LuPlus />
@@ -189,14 +198,6 @@ function TaskBoard() {
                 <LuPlus />
                 Add Task
               </span>
-            )}
-            {openTaskForm && (
-              <div className="fixed top-0 left-0 bg-gray-900/90 w-full h-full z-10 flex items-center justify-center">
-                <AddTask
-                  setOpenTaskForm={setOpenTaskForm}
-                  onsubmit={handleTaskCreating}
-                />
-              </div>
             )}
           </div>
           {taskDetails.length === 0 ? (
@@ -377,8 +378,8 @@ function TaskBoard() {
               </table>
             </div>
           )}
-        </div>
-      </div>
+        </section>
+      </main>
     </>
   );
 }

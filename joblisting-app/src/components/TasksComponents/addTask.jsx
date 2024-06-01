@@ -1,5 +1,5 @@
 // import { useState, useCallback } from "react";
-import CustomSelect from "../../Helpers/customSelect";
+import CustomSelect from "../../Helpers/CustomSelect";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 import { Formik, Form, ErrorMessage, Field } from "formik";

@@ -4,12 +4,12 @@ import Header from "./components/Header";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
-import TaskBoard from "./components/TasksComponents/taskBoard";
+import TaskBoard from "./components/TasksComponents/TaskBoard/";
 import Login from "./components/Auth/Login";
 import useAuth from "./authContexts/AuthContext";
 import Register from "./components/Auth/Register/";
 import AddJob from "./components/JobComponents/AddJob";
-import ResetPassword from "./components/Auth/ResetPassword";
+import ResetPassword from "./components/Auth/ResetPassword/";
 import HomePage from "./components/HomePage";
 import Loading from "./components/Loading";
 

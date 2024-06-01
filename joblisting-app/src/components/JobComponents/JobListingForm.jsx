@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import CustomSelect from "../../Helpers/customSelect";
+import CustomSelect from "../../Helpers/CustomSelect/";
 import MyContext from "../../Context";
 function JobListingForm() {
   const { handleFormChange } = useContext(MyContext);

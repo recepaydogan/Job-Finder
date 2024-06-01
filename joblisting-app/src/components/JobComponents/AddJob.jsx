@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import CustomSelect from "../../Helpers/customSelect";
+import CustomSelect from "../../Helpers/CustomSelect/";
 import * as yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

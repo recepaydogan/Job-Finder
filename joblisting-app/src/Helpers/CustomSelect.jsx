@@ -67,7 +67,9 @@ function CustomSelect({
           >
             {option === selectedOption ? (
               <div className="relative">
-                <span className="absolute">✔</span>{" "}
+                <span className="absolute -top-1 dark:text-black text-white text-xl">
+                  ✓
+                </span>{" "}
                 <p className="pl-6">{option}</p>
               </div>
             ) : (

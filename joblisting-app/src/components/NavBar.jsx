@@ -10,7 +10,7 @@ import { CiMenuBurger } from "react-icons/ci";
 import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
 import useClickOutside from "../CustomHooks/useClickOutside";
-
+import { Transition } from "@headlessui/react";
 const NavLinks = () => {
   const navigate = useNavigate();
   const { userLoggedIn, user, setLoading, loading } = useAuth();
@@ -73,7 +73,15 @@ const NavLinks = () => {
               />
             )}
           </button>
-          {openUserMenu && (
+          <Transition
+            show={openUserMenu}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
             <div className="absolute w-full z-50 ">
               <button
                 className="w-full bg-slate-200 text-black flex items-center justify-center px-3 py-1 mt-1 rounded-md "
@@ -82,7 +90,7 @@ const NavLinks = () => {
                 Logout
               </button>
             </div>
-          )}
+          </Transition>
         </div>
       ) : (
         <NavLink

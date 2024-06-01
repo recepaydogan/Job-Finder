@@ -4,7 +4,6 @@ import JobListingForm from "./JobComponents/JobListingForm";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 import useAuth from "../authContexts/AuthContext";
-
 function HomePage() {
   const { userLoggedIn } = useAuth();
   const displayWarning = useCallback(() => {

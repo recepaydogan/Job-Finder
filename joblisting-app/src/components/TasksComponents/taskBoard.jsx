@@ -13,12 +13,11 @@ import DropdownCategoryMenu from "../../Helpers/DropdownCategoryMenu";
 import DropdownPriorityMenu from "../../Helpers/DropdownPriorityMenu";
 import DropdownStatusMenu from "../../Helpers/DropdownStatusMenu";
 import { RiExpandUpDownFill } from "react-icons/ri";
-import { motion, AnimatePresence } from "framer-motion";
 import AddTask from "./AddTask";
 import { LuPlus } from "react-icons/lu";
 import useAuth from "../../authContexts/AuthContext";
 import { toast } from "react-toastify";
-
+import { Transition } from "@headlessui/react";
 function TaskBoard() {
   const [taskDetails, setTaskDetails] = useState([]);
   const [isFieldSorted, setIsFieldSorted] = useState(false);
@@ -292,85 +291,107 @@ function TaskBoard() {
                             ...
                           </button>
                         </div>
-                        <AnimatePresence>
-                          {" "}
-                          {openRow === index && (
-                            <motion.div
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.2 }}
-                              ref={dropDownMenuRef}
-                              className="absolute  select-none w-36 z-50 -left-36 top-10 text-slate-200 bg-slate-950 border border-white/10  rounded-lg"
-                            >
-                              <ul className="flex justify-around w-full flex-col">
-                                <li
-                                  onMouseEnter={() => {
-                                    handleOpenMenu("status");
-                                  }}
-                                  onMouseLeave={() => {
-                                    setOpenStatusMenu(false);
-                                  }}
-                                  className="px-3 py-1 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between"
+
+                        <Transition
+                          show={openRow === index}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-100"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <div
+                            ref={dropDownMenuRef}
+                            className="absolute  select-none w-36 z-50 -left-36 top-10 text-slate-200 bg-slate-950 border border-white/10  rounded-lg"
+                          >
+                            <ul className="flex justify-around w-full flex-col">
+                              <li
+                                onMouseEnter={() => {
+                                  handleOpenMenu("status");
+                                }}
+                                onMouseLeave={() => {
+                                  setOpenStatusMenu(false);
+                                }}
+                                className="px-3 py-1 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between"
+                              >
+                                Status <HiMiniArrowSmallRight />
+                                <Transition
+                                  show={openStatusMenu}
+                                  enter="transition ease-out duration-100"
+                                  enterFrom="transform opacity-0 scale-95"
+                                  enterTo="transform opacity-100 scale-100"
+                                  leave="transition ease-in duration-100"
+                                  leaveFrom="transform opacity-100 scale-100"
+                                  leaveTo="transform opacity-0 scale-95"
                                 >
-                                  Status <HiMiniArrowSmallRight />
-                                  {openStatusMenu && (
-                                    <DropdownStatusMenu
-                                      handleStatusChange={handleStatusChange}
-                                      selectedRow={selectedRow}
-                                    />
-                                  )}
-                                </li>
-                                <li
-                                  onMouseEnter={() => {
-                                    handleOpenMenu("priority");
-                                  }}
-                                  onMouseLeave={() => {
-                                    setOpenPriorityMenu(false);
-                                  }}
-                                  className="px-3 py-1 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between"
+                                  <DropdownStatusMenu
+                                    handleStatusChange={handleStatusChange}
+                                    selectedRow={selectedRow}
+                                  />
+                                </Transition>
+                              </li>
+                              <li
+                                onMouseEnter={() => {
+                                  handleOpenMenu("priority");
+                                }}
+                                onMouseLeave={() => {
+                                  setOpenPriorityMenu(false);
+                                }}
+                                className="px-3 py-1 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between"
+                              >
+                                Priority <HiMiniArrowSmallRight />
+                                <Transition
+                                  show={openPriorityMenu}
+                                  enter="transition ease-out duration-100"
+                                  enterFrom="transform opacity-0 scale-95"
+                                  enterTo="transform opacity-100 scale-100"
+                                  leave="transition ease-in duration-100"
+                                  leaveFrom="transform opacity-100 scale-100"
+                                  leaveTo="transform opacity-0 scale-95"
                                 >
-                                  Priority <HiMiniArrowSmallRight />
-                                  {openPriorityMenu && (
-                                    <DropdownPriorityMenu
-                                      selectedRow={selectedRow}
-                                      handlePriorityChange={
-                                        handlePriorityChange
-                                      }
-                                    />
-                                  )}
-                                </li>
-                                <li
-                                  onMouseEnter={() => {
-                                    handleOpenMenu("category");
-                                  }}
-                                  onMouseLeave={() => {
-                                    setOpenCategoryMenu(false);
-                                  }}
-                                  className="px-3 py-1 border-b border-white/30 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between "
+                                  <DropdownPriorityMenu
+                                    selectedRow={selectedRow}
+                                    handlePriorityChange={handlePriorityChange}
+                                  />
+                                </Transition>
+                              </li>
+                              <li
+                                onMouseEnter={() => {
+                                  handleOpenMenu("category");
+                                }}
+                                onMouseLeave={() => {
+                                  setOpenCategoryMenu(false);
+                                }}
+                                className="px-3 py-1 border-b border-white/30 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between "
+                              >
+                                Category <HiMiniArrowSmallRight />
+                                <Transition
+                                  show={openCategoryMenu}
+                                  enter="transition ease-out duration-100"
+                                  enterFrom="transform opacity-0 scale-95"
+                                  enterTo="transform opacity-100 scale-100"
+                                  leave="transition ease-in duration-100"
+                                  leaveFrom="transform opacity-100 scale-100"
+                                  leaveTo="transform opacity-0 scale-95"
                                 >
-                                  Category <HiMiniArrowSmallRight />
-                                  {openCategoryMenu && (
-                                    <DropdownCategoryMenu
-                                      selectedRow={selectedRow}
-                                      handleCategoryChange={
-                                        handleCategoryChange
-                                      }
-                                    />
-                                  )}
-                                </li>
-                                <li
-                                  onClick={() => {
-                                    handleDeleteTask(task.id);
-                                  }}
-                                  className="px-3 py-2 text-nowrap hover:bg-slate-800 cursor-pointer "
-                                >
-                                  Delete
-                                </li>{" "}
-                              </ul>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                                  <DropdownCategoryMenu
+                                    selectedRow={selectedRow}
+                                    handleCategoryChange={handleCategoryChange}
+                                  />
+                                </Transition>
+                              </li>
+                              <li
+                                onClick={() => {
+                                  handleDeleteTask(task.id);
+                                }}
+                                className="px-3 py-2 text-nowrap hover:bg-slate-800 cursor-pointer "
+                              >
+                                Delete
+                              </li>{" "}
+                            </ul>
+                          </div>
+                        </Transition>
                       </td>
                     </tr>
                   ))}

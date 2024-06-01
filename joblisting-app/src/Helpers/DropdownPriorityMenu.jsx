@@ -1,16 +1,12 @@
+/* eslint-disable react/prop-types */
 import { RiCheckboxBlankCircleFill } from "react-icons/ri";
-import PropTypes from "prop-types";
-import { motion, AnimatePresence } from "framer-motion";
-
-function DropdownPriorityMenu({ handlePriorityChange, selectedRow }) {
-  const generalPriority = ["High", "Medium", "Low"];
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ ease: "easeIn", duration: 0.2 }}
+import React from "react";
+const DropdownPriorityMenu = React.forwardRef(
+  ({ handlePriorityChange, selectedRow }, ref) => {
+    const generalPriority = ["High", "Medium", "Low"];
+    return (
+      <div
+        ref={ref}
         className="absolute z-50 top-0 right-full text-slate-200 bg-slate-950 border border-white/10  rounded-md "
       >
         <ul>
@@ -38,12 +34,9 @@ function DropdownPriorityMenu({ handlePriorityChange, selectedRow }) {
             );
           })}
         </ul>
-      </motion.div>
-    </AnimatePresence>
-  );
-}
-DropdownPriorityMenu.propTypes = {
-  handlePriorityChange: PropTypes.func,
-  selectedRow: PropTypes.object,
-};
+      </div>
+    );
+  }
+);
+DropdownPriorityMenu.displayName = "DropdownPriorityMenu";
 export default DropdownPriorityMenu;

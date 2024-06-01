@@ -1,17 +1,13 @@
 import PropTypes from "prop-types";
 import { RiCheckboxBlankCircleFill } from "react-icons/ri";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+const DropdownStatusMenu = React.forwardRef(
+  ({ handleStatusChange, selectedRow }, ref) => {
+    const generalStatus = ["In Progress", "Done", "Todo"];
 
-function DropdownStatusMenu({ handleStatusChange, selectedRow }) {
-  const generalStatus = ["In Progress", "Done", "Todo"];
-
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ ease: "easeIn", duration: 0.2 }}
+    return (
+      <div
+        ref={ref}
         className="absolute z-50 top-0 right-full text-slate-200 bg-slate-950 border border-white/10  rounded-md "
       >
         <ul>
@@ -39,10 +35,11 @@ function DropdownStatusMenu({ handleStatusChange, selectedRow }) {
             );
           })}
         </ul>
-      </motion.div>
-    </AnimatePresence>
-  );
-}
+      </div>
+    );
+  }
+);
+DropdownStatusMenu.displayName = "DropdownStatusMenu";
 DropdownStatusMenu.propTypes = {
   handleStatusChange: PropTypes.func.isRequired,
   selectedRow: PropTypes.object.isRequired,

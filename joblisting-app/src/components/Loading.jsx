@@ -1,19 +1,21 @@
 import { RotatingLines } from "react-loader-spinner";
 function Loading() {
   return (
-    <div className="flex justify-center items-center absolute pointer-events-none right-1/2 top-1/2">
-      <RotatingLines
-        className="text-white"
-        visible={true}
-        height="96"
-        width="96"
-        strokeColor="white"
-        strokeWidth="5"
-        animationDuration="0.75"
-        ariaLabel="rotating-lines-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-      />
+    <div className="flex h-screen  w-screen justify-center items-center fixed top-0 left-0 z-[70] bg-black/50">
+      <div className="flex justify-center items-center pointer-events-none">
+        <RotatingLines
+          className="text-white"
+          visible={true}
+          height="96"
+          width="96"
+          strokeColor="white"
+          strokeWidth="5"
+          animationDuration="0.75"
+          ariaLabel="rotating-lines-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
     </div>
   );
 }

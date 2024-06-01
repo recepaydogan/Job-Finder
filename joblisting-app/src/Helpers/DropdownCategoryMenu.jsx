@@ -9,7 +9,6 @@ function DropdownCategoryMenu({ handleCategoryChange, selectedRow }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ ease: "easeIn", duration: 0.2 }}
       className="absolute z-50 top-0 right-full text-slate-200 bg-slate-950 border border-white/10  rounded-md "
     >
       <ul>

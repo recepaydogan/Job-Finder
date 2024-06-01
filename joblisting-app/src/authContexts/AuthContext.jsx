@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect, useContext, useMemo } from "react";
 import { auth } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-const AuthContext = createContext();
 
+const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const isUserLoggedIn = JSON.parse(localStorage.getItem("user"));
   const [currentUser, setCurrentUser] = useState(null);

@@ -6,11 +6,16 @@ import { FaRegEye } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { FcLike } from "react-icons/fc";
 import { CiHeart } from "react-icons/ci";
+import {
+  PiCalendarCheckBold,
+  PiCurrencyCircleDollarBold,
+} from "react-icons/pi";
+import { SlGraduation } from "react-icons/sl";
 
 import MyContext from "../../Context";
 import JobDetails from "./JobDetails";
 
-function JobCard({ job }) {
+function JobCard({ job, isCreatingJob }) {
   const { FormData, likedJobs, setLikedJobs, setHiddenJobs, hiddenJobs } =
     useContext(MyContext);
   const [showHiddenJobs, setShowHiddenJobs] = useState(FormData.showHidden);
@@ -117,13 +122,15 @@ function JobCard({ job }) {
           !isJobHidden || showHiddenJobs ? "flex" : "hidden text-gray-400"
         } ${
           isJobHidden ? "text-gray-400" : ""
-        } select-none flex-col py-3 px-4  border-white/10 rounded-xl border-[1px] dark:border-slate-950`}
+        } select-none  flex-col py-3 px-4  border-white/10 rounded-xl border-[1px] dark:border-slate-950`}
       >
         <div className="flex items-center  justify-between ">
           <div className="text-2xl text-nowrap">{job.jobTitle}</div>
-          <div className="flex  justify-center items-center text-lg">
+          <div className="flex justify-center items-center text-lg">
             <span
-              className="cursor-pointer flex justify-center items-center  size-12 hover:bg-white/10 rounded-full dark:hover:bg-slate-950 dark:hover:text-white"
+              className={`${
+                isCreatingJob && "pointer-events-none"
+              } cursor-pointer transition-all flex justify-center items-center  size-12 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
               onClick={toggleVisibility}
             >
               {!isJobHidden ? (
@@ -134,7 +141,9 @@ function JobCard({ job }) {
             </span>
             <span
               onClick={toggleLikedJobs}
-              className="cursor-pointer flex justify-center items-center  size-12 hover:bg-white/10 rounded-full dark:hover:bg-slate-950 dark:hover:text-white"
+              className={`${
+                isCreatingJob && "pointer-events-none"
+              } cursor-pointer transition-all flex justify-center items-center  size-12 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
             >
               {likedJobs.some((likedJob) => likedJob.id === job.id) ? (
                 <FcLike size={20} />
@@ -150,23 +159,29 @@ function JobCard({ job }) {
         <div className="text-sm text-gray-400 dark:text-gray-800">
           {job.location}
         </div>
-        <div className="flex text-xs gap-2 items-center justify-start my-2">
-          <div className="bg-slate-800 cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
+        <div className="flex dark:text-black text-xs gap-2 items-center justify-start my-2">
+          <div className="  bg-slate-800 flex gap-1 items-center justify-center cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
+            <PiCurrencyCircleDollarBold className="" size={20} />
             {Number(job.salary).toLocaleString()}
           </div>
-          <div className="bg-slate-800 cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
+          <div className="  bg-slate-800 flex gap-1 items-center justify-center cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
+            <PiCalendarCheckBold className="" size={20} />
             {job.type}
           </div>
-          <div className="bg-slate-800 cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
+          <div className="  bg-slate-800 flex gap-1 items-center justify-center cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
+            <SlGraduation className="" size={20} />
             {job.experienceLevel}
           </div>
         </div>
-        <div className="py-4">{job.description}</div>
+        <div className="py-4 break-words">{job.description}</div>
         <div
           onClick={() => setShowJobDetails(true)}
           className="flex w-full justify-end"
         >
-          <button className="dark:text-white text-sm border border-white/10 px-6 select-none py-1 rounded-md bg-slate-900 hover:bg-slate-800 transition-all">
+          <button
+            disabled={isCreatingJob}
+            className="dark:text-white text-sm border border-white/10 px-6 select-none py-1 rounded-md bg-slate-900 hover:bg-slate-800 transition-all"
+          >
             Details
           </button>
         </div>

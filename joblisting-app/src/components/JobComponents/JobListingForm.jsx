@@ -7,7 +7,7 @@ function JobListingForm() {
     title: "",
     location: "",
     salary: "",
-    jobType: "",
+    type: "",
     experienceLevel: "",
     showHiddenJobs: false,
     showFavorites: false,
@@ -23,7 +23,7 @@ function JobListingForm() {
   };
   // Handle job type change
   const handleJobTypeChange = useCallback((value) => {
-    setFormData((prev) => ({ ...prev, jobType: value }));
+    setFormData((prev) => ({ ...prev, type: value }));
   }, []);
   // Handle experience level change
   const handleExperinceLevelChange = useCallback((value) => {
@@ -48,9 +48,10 @@ function JobListingForm() {
           <label className="font-semibold">Title</label>
           <input
             name="title"
+            value={FormData.title}
             onChange={handleChange}
             placeholder="Search for a job title"
-            className="dark:border-gray-950 dark:text-black  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+            className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="text"
           />
         </div>
@@ -58,9 +59,10 @@ function JobListingForm() {
           <label className="font-semibold">Company</label>
           <input
             name="company"
+            value={FormData.company}
             onChange={handleChange}
             placeholder="Search for a location"
-            className="dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+            className="dark:border-gray-950 dark:bg-slate-900    bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="text"
           />
         </div>
@@ -68,9 +70,10 @@ function JobListingForm() {
           <label className="font-semibold">Location</label>
           <input
             name="location"
+            value={FormData.location}
             onChange={handleChange}
             placeholder="Search for a location"
-            className="dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+            className="dark:border-gray-950 dark:bg-slate-900   bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="text"
           />
         </div>
@@ -78,9 +81,10 @@ function JobListingForm() {
           <label className="font-semibold">Min. Salary</label>
           <input
             name="salary"
+            value={FormData.salary}
             onChange={handleChange}
             placeholder="Search for a min. salary"
-            className="dark:border-gray-950 dark:text-black   bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+            className="dark:border-gray-950 dark:bg-slate-900    bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="number"
           />
         </div>
@@ -89,7 +93,7 @@ function JobListingForm() {
           <CustomSelect
             onSelectChange={handleJobTypeChange}
             options={["Any", "Full-Time", "Part-Time", "Internship"]}
-            defaultValue="Any"
+            defaultValue={FormData.type == "" ? FormData.type : "Any"}
           />
         </div>
         <div className="flex flex-col gap-1 w-full">
@@ -97,7 +101,9 @@ function JobListingForm() {
           <CustomSelect
             onSelectChange={handleExperinceLevelChange}
             options={["Any", "Junior", "Middle", "Senior"]}
-            defaultValue="Any"
+            defaultValue={
+              FormData.experienceLevel == "" ? FormData.experienceLevel : "Any"
+            }
           />
         </div>
         <div className="flex h-full items-center justify-end select-none gap-1 w-full">
@@ -105,24 +111,42 @@ function JobListingForm() {
             <label className="flex items-center cursor-pointer gap-3">
               <input
                 name="showHiddenJobs"
+                value={FormData.showHiddenJobs}
                 onChange={handleCheckBoxChange}
-                className="dark:border-gray-950 appearance-none relative after:absolute after:top-2/4 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2  after:text-black after:text-md checked:after:visible after:invisible  after:content-['✓'] size-4 border-[1px]  checked:bg-white border-white/10"
+                className="dark:checked:bg-slate-900 dark:after:text-white dark:text-white dark:border-gray-950 appearance-none relative after:absolute after:top-2/4 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2  after:text-black after:text-md checked:after:visible after:invisible after:content-['✓'] size-4 border-[1px]  checked:bg-white border-white/10"
                 type="checkbox"
+                checked={FormData.showHiddenJobs}
               />
-              <p className="text-nowrap">Show Hidden</p>
+              <p className="whitespace-nowrap">Show Hidden</p>
             </label>
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 name="showFavorites"
                 onChange={handleCheckBoxChange}
-                className="dark:border-gray-950 appearance-none relative after:absolute after:top-2/4 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2  after:text-black after:text-md checked:after:visible after:invisible after:content-['✓'] size-4 border-[1px]  checked:bg-white border-white/10"
+                className="dark:checked:bg-slate-900 dark:after:text-white dark:text-white dark:border-gray-950 appearance-none relative after:absolute after:top-2/4 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2  after:text-black after:text-md checked:after:visible after:invisible after:content-['✓'] size-4 border-[1px]  checked:bg-white border-white/10"
                 type="checkbox"
+                checked={FormData.showFavorites}
               />
-              <p className="text-nowrap">Show Favorites</p>
+              <p className="whitespace-nowrap">Show Favorites</p>
             </label>
           </div>
           <div className="flex h-full items-center justify-end flex-col gap-1 w-full">
-            <button className="dark:bg-slate-950 dark:text-white py-2 px-4 rounded-md text-black font-semibold bg-white hover:bg-white/90">
+            <button
+              type="button"
+              onClick={() => {
+                setFormData({
+                  title: "",
+                  location: "",
+                  salary: "",
+                  type: "",
+                  experienceLevel: "",
+                  showHiddenJobs: false,
+                  showFavorites: false,
+                  company: "",
+                });
+              }}
+              className="dark:bg-slate-950 active:scale-95 dark:hover:bg-black/80 dark:text-white py-2 px-4 rounded-md text-black font-semibold bg-white hover:bg-white/90"
+            >
               Reset
             </button>
           </div>

@@ -26,7 +26,7 @@ function Login() {
         return (
           <>
             {userLoggedIn && <Navigate to="/" />}
-            <div className="w-full h-[85%] flex-col mt-40  flex justify-center items-center dark:text-white ">
+            <div className="w-full flex-col mt-40  flex justify-center items-center dark:text-white ">
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-col w-2/5 py-8 px-10 bg-slate-900 max-sm:w-10/12 max-lg:w-2/4 max-xl:w-2/4 rounded-lg "
@@ -58,6 +58,7 @@ function Login() {
                 </button>
                 <button
                   onClick={signInWithGoogle}
+                  type="button"
                   className=" bg-slate-950 py-2 rounded-md mt-2 hover:bg-slate-800 transition-all"
                 >
                   Log in with Google

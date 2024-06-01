@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
-
+import useClickOutside from "../CustomHooks/useClickOutside";
 function CustomSelect({
   options,
   defaultValue,
@@ -12,20 +12,16 @@ function CustomSelect({
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const [selecting, setSelecting] = useState(false);
   const selectRef = useRef();
+  useClickOutside({ itemRef: selectRef, setItem: setSelecting });
   // Close the dropdown when clicking outside
   useEffect(() => {
-    function handleClickOutside(e) {
-      if (!selectRef.current.contains(e.target)) {
-        setSelecting(false);
-      }
+    if (defaultValue == "") {
+      setSelectedOption("Any");
     }
+  }, [defaultValue]);
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
   // Handle the change of the selected option -- For the job Creation form
+
   const handleChange = (value) => {
     onChange({
       target: {
@@ -42,7 +38,7 @@ function CustomSelect({
   }, [selectedOption, onSelectChange]);
 
   return (
-    <div ref={selectRef} className=" relative mt-2 select-none cursor-pointer">
+    <div ref={selectRef} className=" relative select-none cursor-pointer">
       <div
         onClick={() => setSelecting(!selecting)}
         className=" dark:border-slate-950 dark:bg-slate-900  flex  w-full  justify-between  text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
@@ -64,7 +60,9 @@ function CustomSelect({
             onClick={() => {
               setSelectedOption(option);
               setSelecting(false);
-              handleChange(option);
+              if (onChange) {
+                handleChange(option);
+              }
             }}
           >
             {option === selectedOption ? (

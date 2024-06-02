@@ -9,15 +9,13 @@ import { HiMiniArrowSmallUp } from "react-icons/hi2";
 import { FaRegSquare } from "react-icons/fa6";
 import { FaRegSquareCheck } from "react-icons/fa6";
 import { MdOutlineTimer } from "react-icons/md";
-import DropdownCategoryMenu from "../../Helpers/DropdownCategoryMenu";
-import DropdownPriorityMenu from "../../Helpers/DropdownPriorityMenu";
-import DropdownStatusMenu from "../../Helpers/DropdownStatusMenu/";
 import { RiExpandUpDownFill } from "react-icons/ri";
 import AddTask from "./AddTask";
 import { LuPlus } from "react-icons/lu";
 import useAuth from "../../authContexts/AuthContext";
 import { toast } from "react-toastify";
 import { Transition } from "@headlessui/react";
+import DropdownTaskMenu from "../../Helpers/DropdownTaskMenu";
 function TaskBoard() {
   const [taskDetails, setTaskDetails] = useState([]);
   const [isFieldSorted, setIsFieldSorted] = useState(false);
@@ -91,51 +89,6 @@ function TaskBoard() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  const handleStatusChange = async (status) => {
-    await axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
-      ...selectedRow,
-      status: status,
-    });
-    setTaskDetails(
-      taskDetails.map((task, index) => {
-        if (index === openRow) {
-          return { ...task, status: status };
-        }
-        return task;
-      })
-    );
-    setOpenRow(null);
-  };
-  const handlePriorityChange = async (priority) => {
-    await axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
-      ...selectedRow,
-      priority: priority,
-    });
-    setTaskDetails(
-      taskDetails.map((task, index) => {
-        if (index === openRow) {
-          return { ...task, priority: priority };
-        }
-        return task;
-      })
-    );
-    setOpenRow(null);
-  };
-  const handleCategoryChange = async (category) => {
-    await axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
-      ...selectedRow,
-      category: category,
-    });
-    setTaskDetails(
-      taskDetails.map((task, index) => {
-        if (index === openRow) {
-          return { ...task, category: category };
-        }
-        return task;
-      })
-    );
-    setOpenRow(null);
-  };
   const handleSelectingRow = (index) => {
     setOpenRow(openRow === index ? null : index);
     setselectedRow(taskDetails[index]);
@@ -156,7 +109,21 @@ function TaskBoard() {
     setOpenTaskForm(false);
     setResetTaskTable(!resetTaskTable);
   };
-
+  const handleTaskChange = async (key, value) => {
+    await axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
+      ...selectedRow,
+      [key]: value,
+    });
+    setTaskDetails(
+      taskDetails.map((task, index) => {
+        if (index === openRow) {
+          return { ...task, [key]: value };
+        }
+        return task;
+      })
+    );
+    setOpenRow(null);
+  };
   return (
     <>
       {openRow !== null && (
@@ -334,9 +301,15 @@ function TaskBoard() {
                                   leaveFrom="transform opacity-100 scale-100"
                                   leaveTo="transform opacity-0 scale-95"
                                 >
-                                  <DropdownStatusMenu
-                                    handleStatusChange={handleStatusChange}
+                                  <DropdownTaskMenu
+                                    type={"status"}
+                                    handleChange={handleTaskChange}
                                     selectedRow={selectedRow}
+                                    generalItems={[
+                                      "In Progress",
+                                      "Done",
+                                      "Todo",
+                                    ]}
                                   />
                                 </Transition>
                               </li>
@@ -359,9 +332,11 @@ function TaskBoard() {
                                   leaveFrom="transform opacity-100 scale-100"
                                   leaveTo="transform opacity-0 scale-95"
                                 >
-                                  <DropdownPriorityMenu
+                                  <DropdownTaskMenu
+                                    type={"priority"}
                                     selectedRow={selectedRow}
-                                    handlePriorityChange={handlePriorityChange}
+                                    handleChange={handleTaskChange}
+                                    generalItems={["High", "Medium", "Low"]}
                                   />
                                 </Transition>
                               </li>
@@ -384,9 +359,11 @@ function TaskBoard() {
                                   leaveFrom="transform opacity-100 scale-100"
                                   leaveTo="transform opacity-0 scale-95"
                                 >
-                                  <DropdownCategoryMenu
+                                  <DropdownTaskMenu
+                                    type={"category"}
                                     selectedRow={selectedRow}
-                                    handleCategoryChange={handleCategoryChange}
+                                    handleChange={handleTaskChange}
+                                    generalItems={["Personal", "Work"]}
                                   />
                                 </Transition>
                               </li>

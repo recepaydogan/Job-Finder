@@ -3,15 +3,16 @@
     {
       "id": "d4ab",
       "title": "234324",
-      "status": "Todo",
+      "status": "Done",
       "priority": "High",
-      "category": "Personal"
+      "category": "Personal",
+      "undefined": "Work"
     },
     {
       "id": "0643",
       "title": "23423432",
       "status": "Todo",
-      "priority": "High",
+      "priority": "Low",
       "category": "Personal"
     },
     {
@@ -19,21 +20,22 @@
       "title": "234324",
       "status": "Todo",
       "priority": "High",
-      "category": "Personal"
+      "category": "Work",
+      "undefined": "Done"
     },
     {
       "id": "d263",
       "title": "123123",
-      "status": "Done",
+      "status": "In Progress",
       "priority": "High",
       "category": "Personal"
     },
     {
       "id": "44e4",
       "title": "32432",
-      "status": "Todo",
+      "status": "In Progress",
       "priority": "Medium",
-      "category": "Personal"
+      "category": "Work"
     }
   ]
 }

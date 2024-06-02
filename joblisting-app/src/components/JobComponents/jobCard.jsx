@@ -16,18 +16,18 @@ import MyContext from "../../Context";
 import JobDetails from "./JobDetails";
 
 function JobCard({ job, isCreatingJob }) {
-  const { FormData, likedJobs, setLikedJobs, setHiddenJobs, hiddenJobs } =
+  const { formData, likedJobs, setLikedJobs, setHiddenJobs, hiddenJobs } =
     useContext(MyContext);
-  const [showHiddenJobs, setShowHiddenJobs] = useState(FormData.showHidden);
+  const [showHiddenJobs, setShowHiddenJobs] = useState(formData.showHidden);
   const [isJobHidden, setIsJobHidden] = useState(
     hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id) || false
   );
   const [showJobDetails, setShowJobDetails] = useState(false);
   useEffect(() => {
-    if (FormData) {
-      setShowHiddenJobs(FormData.showHiddenJobs);
+    if (formData) {
+      setShowHiddenJobs(formData.showHiddenJobs);
     }
-  }, [job.id, FormData]);
+  }, [job.id, formData]);
   // Hide or show job card
   const toggleVisibility = () => {
     const isItHidden = hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id);

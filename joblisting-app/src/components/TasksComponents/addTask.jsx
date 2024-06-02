@@ -60,9 +60,6 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
           priority: yup.string().required(),
           category: yup.string().required(),
         })}
-        setFieldValue={(field, value) => {
-          console.log(field, value);
-        }}
       >
         {({
           setFieldValue,
@@ -115,7 +112,6 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                         options={["Any", "Todo", "In Progress", "Done"]}
                         as={CustomSelect}
                         onChange={(event) => {
-                          console.log(event);
                           const value = event.target.value;
                           setFieldValue("status", value);
                         }}
@@ -137,7 +133,6 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                         options={["Any", "High", "Medium", "Low"]}
                         as={CustomSelect}
                         onChange={(event) => {
-                          console.log(event);
                           const value = event.target.value;
                           setFieldValue("priority", value);
                         }}
@@ -158,7 +153,6 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                         options={["Any", "Personal", "Work"]}
                         as={CustomSelect}
                         onChange={(event) => {
-                          console.log(event);
                           const value = event.target.value;
                           setFieldValue("category", value);
                         }}

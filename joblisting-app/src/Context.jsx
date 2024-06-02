@@ -5,7 +5,7 @@ import axios from "axios";
 const MyContext = createContext();
 
 function Provider({ children }) {
-  const [FormData, setFormData] = useState({});
+  const [formData, setFormData] = useState({});
   const [jobs, setJobs] = useState([]);
   const [displayedJobs, setDisplayedJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -32,16 +32,16 @@ function Provider({ children }) {
   useEffect(() => {
     let newDisplayedJobs = jobs;
 
-    if (FormData.showFavorites) {
+    if (formData.showFavorites) {
       newDisplayedJobs = likedJobs;
     }
 
     setDisplayedJobs(newDisplayedJobs);
   }, [
-    FormData.showFavorites,
+    formData.showFavorites,
     jobs,
     likedJobs,
-    FormData.showHiddenJobs,
+    formData.showHiddenJobs,
     hiddenJobs,
   ]);
   // Filter jobs based on the form data
@@ -49,44 +49,44 @@ function Provider({ children }) {
     const filteredJobs = displayedJobs.filter((job) => {
       if (
         hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id) &&
-        !FormData.showHiddenJobs
+        !formData.showHiddenJobs
       ) {
         return false;
       }
       if (
-        FormData.title &&
-        !job.jobTitle.toLowerCase().includes(FormData.title.toLowerCase())
+        formData.title &&
+        !job.jobTitle.toLowerCase().includes(formData.title.toLowerCase())
       ) {
         return false;
       }
       if (
-        FormData.company &&
-        !job.company.toLowerCase().includes(FormData.company.toLowerCase())
+        formData.company &&
+        !job.company.toLowerCase().includes(formData.company.toLowerCase())
       ) {
         return false;
       }
       if (
-        FormData.location &&
-        !job.location.toLowerCase().includes(FormData.location.toLowerCase())
+        formData.location &&
+        !job.location.toLowerCase().includes(formData.location.toLowerCase())
       ) {
         return false;
       }
-      if (FormData.salary && parseInt(job.salary) < parseInt(FormData.salary)) {
+      if (formData.salary && parseInt(job.salary) < parseInt(formData.salary)) {
         return false;
       }
       if (
-        FormData.type &&
-        FormData.type !== "Any" &&
-        !job.type.toLowerCase().includes(FormData.type.toLowerCase())
+        formData.type &&
+        formData.type !== "Any" &&
+        !job.type.toLowerCase().includes(formData.type.toLowerCase())
       ) {
         return false;
       }
       if (
-        FormData.experienceLevel &&
-        FormData.experienceLevel !== "Any" &&
+        formData.experienceLevel &&
+        formData.experienceLevel !== "Any" &&
         !job.experienceLevel
           .toLowerCase()
-          .includes(FormData.experienceLevel.toLowerCase())
+          .includes(formData.experienceLevel.toLowerCase())
       ) {
         return false;
       }
@@ -94,11 +94,11 @@ function Provider({ children }) {
       return true;
     });
     setFilteredJobs(filteredJobs);
-  }, [FormData, displayedJobs, hiddenJobs, FormData.showFavorites]);
+  }, [formData, displayedJobs, hiddenJobs, formData.showFavorites]);
   const sharedDatas = {
     handleFormChange,
     filteredJobs,
-    FormData,
+    formData,
     likedJobs,
     setLikedJobs,
     hiddenJobs,

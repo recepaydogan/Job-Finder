@@ -11,7 +11,7 @@ import { FaRegSquareCheck } from "react-icons/fa6";
 import { MdOutlineTimer } from "react-icons/md";
 import DropdownCategoryMenu from "../../Helpers/DropdownCategoryMenu";
 import DropdownPriorityMenu from "../../Helpers/DropdownPriorityMenu";
-import DropdownStatusMenu from "../../Helpers/DropdownStatusMenu";
+import DropdownStatusMenu from "../../Helpers/DropdownStatusMenu/";
 import { RiExpandUpDownFill } from "react-icons/ri";
 import AddTask from "./AddTask";
 import { LuPlus } from "react-icons/lu";
@@ -162,14 +162,23 @@ function TaskBoard() {
       {openRow !== null && (
         <div className="fixed top-0 left-0 w-full h-full  z-10" />
       )}
-      {openTaskForm && (
+      <Transition
+        show={openTaskForm}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-100"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
         <div className="fixed top-0 left-0 backdrop-blur w-full h-full z-10 flex items-center justify-center">
           <AddTask
             setOpenTaskForm={setOpenTaskForm}
             onsubmit={handleTaskCreating}
           />
         </div>
-      )}
+      </Transition>
+
       <main className="w-full pb-32 bg-slate-950 relative items-center gap-10 justify-center dark:bg-white">
         <section className=" w-2/3 mx-auto max-md:w-11/12">
           <div className="flex text-sm items-center justify-around pb-4 select-none">

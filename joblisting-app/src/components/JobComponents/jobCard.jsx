@@ -11,7 +11,7 @@ import {
   PiCurrencyCircleDollarBold,
 } from "react-icons/pi";
 import { SlGraduation } from "react-icons/sl";
-
+import { Transition } from "@headlessui/react";
 import MyContext from "../../Context";
 import JobDetails from "./JobDetails";
 
@@ -112,11 +112,20 @@ function JobCard({ job, isCreatingJob }) {
 
   return (
     <>
-      {showJobDetails && (
+      <Transition
+        show={showJobDetails}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
         <div className="fixed top-0 backdrop-blur  left-0  w-full h-full">
           <JobDetails job={job} setShowJobDetails={setShowJobDetails} />
         </div>
-      )}
+      </Transition>
+
       <div
         className={`${
           !isJobHidden || showHiddenJobs ? "flex" : "hidden text-gray-400"

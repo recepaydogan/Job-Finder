@@ -12,6 +12,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
   const taskCreatingRef = useRef();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { setLoading } = useAuth();
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!taskCreatingRef.current?.contains(e.target) && !isSubmitting) {
@@ -40,16 +41,13 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
           priority: "",
           category: "",
         }}
-        onSubmit={(values, actions) => {
+        onSubmit={async (values, actions) => {
           setIsSubmitting(true);
           setLoading(true);
-          setTimeout(() => {
-            onsubmit(values);
-            actions.resetForm();
-            actions.setSubmitting(false);
-            setIsSubmitting(false);
-            setLoading(false);
-          }, 2000);
+          await onsubmit(values);
+          actions.resetForm();
+          setLoading(false);
+          setIsSubmitting(false);
         }}
         validationSchema={yup.object().shape({
           title: yup

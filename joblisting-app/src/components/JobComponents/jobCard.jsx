@@ -133,13 +133,15 @@ function JobCard({ job, isCreatingJob }) {
           isJobHidden ? "text-gray-400" : ""
         } select-none  flex-col py-3 px-4  border-white/10 rounded-xl border-[1px] dark:border-slate-950`}
       >
-        <div className="flex items-center  justify-between ">
-          <div className="text-2xl text-nowrap">{job.jobTitle}</div>
-          <div className="flex justify-center items-center text-lg">
+        <div className="flex items-center justify-between ">
+          <div className="text-2xl text-wrap break-words max-w-80">
+            {job.jobTitle}
+          </div>
+          <div className="flex justify-center items-center">
             <span
               className={`${
                 isCreatingJob && "pointer-events-none"
-              } cursor-pointer transition-all flex justify-center items-center  size-12 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
+              } cursor-pointer  flex justify-center items-center  size-10 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
               onClick={toggleVisibility}
             >
               {!isJobHidden ? (
@@ -152,7 +154,7 @@ function JobCard({ job, isCreatingJob }) {
               onClick={toggleLikedJobs}
               className={`${
                 isCreatingJob && "pointer-events-none"
-              } cursor-pointer transition-all flex justify-center items-center  size-12 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
+              } cursor-pointer  flex justify-center items-center  size-10 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
             >
               {likedJobs.some((likedJob) => likedJob.id === job.id) ? (
                 <FcLike size={20} />
@@ -182,7 +184,9 @@ function JobCard({ job, isCreatingJob }) {
             {job.experienceLevel}
           </div>
         </div>
-        <div className="py-4 break-words">{job.description}</div>
+        <div className="py-4 max-w-96">
+          <p className="break-words text-wrap">{job.description}</p>
+        </div>
         <div
           onClick={() => setShowJobDetails(true)}
           className="flex w-full justify-end"

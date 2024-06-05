@@ -18,7 +18,7 @@
     {
       "id": "bd03",
       "title": "234324",
-      "status": "Todo",
+      "status": "In Progress",
       "priority": "High",
       "category": "Work",
       "undefined": "Done"
@@ -28,7 +28,7 @@
       "title": "123123",
       "status": "In Progress",
       "priority": "High",
-      "category": "Personal"
+      "category": "Work"
     },
     {
       "id": "44e4",

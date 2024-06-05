@@ -4,6 +4,8 @@ import JobListingForm from "./JobComponents/JobListingForm";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 import useAuth from "../authContexts/AuthContext";
+import { LuPlus } from "react-icons/lu";
+
 function HomePage() {
   const { userLoggedIn } = useAuth();
   const displayWarning = useCallback(() => {
@@ -11,14 +13,15 @@ function HomePage() {
   }, []);
   return (
     <main className="container mx-auto pb-20 text-sm pt-5 relative ">
-      <section className="md:mx-32 mx-4">
+      <section className="md:mx-28 mx-4">
         <h1 className="text-3xl font-semibold flex justify-between items-center gap-8 mb-8">
           Jobs
           {userLoggedIn ? (
             <NavLink
-              className="dark:text-white text-base border border-white/10 px-3 select-none py-2 rounded-md bg-slate-900 hover:bg-slate-800 transition-all"
+              className="flex items-center gap-2 justify-center dark:text-white text-base border border-white/10 px-3 select-none py-2 rounded-md bg-slate-900 hover:bg-slate-800 transition-all"
               to="/add-job"
             >
+              <LuPlus />
               Add Job
             </NavLink>
           ) : (

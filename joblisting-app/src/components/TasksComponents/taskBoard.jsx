@@ -16,10 +16,10 @@ import useAuth from "../../authContexts/AuthContext";
 import { toast } from "react-toastify";
 import { Transition } from "@headlessui/react";
 import DropdownTaskMenu from "../../Helpers/DropdownTaskMenu";
+import { useContext } from "react";
+import TasksContext from ".//..//..//TaskContext";
 function TaskBoard() {
-  const [taskDetails, setTaskDetails] = useState([]);
   const [isFieldSorted, setIsFieldSorted] = useState(false);
-  const [resetTaskTable, setResetTaskTable] = useState(false);
   const [openRow, setOpenRow] = useState(null);
   const [openStatusMenu, setOpenStatusMenu] = useState(false);
   const [openPriorityMenu, setOpenPriorityMenu] = useState(false);
@@ -28,13 +28,8 @@ function TaskBoard() {
   const [openTaskForm, setOpenTaskForm] = useState(false);
   const dropDownMenuRef = useRef();
   const { userLoggedIn } = useAuth();
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("http://localhost:3003/tasks");
-      setTaskDetails(response.data);
-    };
-    fetchData();
-  }, [resetTaskTable]);
+  const { taskDetails, setTaskDetails, setResetTaskTable, resetTaskTable } =
+    useContext(TasksContext);
 
   const handleSortFieldChange = (field) => {
     const isDataSortedBefore = !isFieldSorted;
@@ -73,7 +68,7 @@ function TaskBoard() {
     }
   };
   const resetTable = () => {
-    setResetTaskTable(false);
+    setResetTaskTable((prev) => !prev);
   };
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -99,21 +94,17 @@ function TaskBoard() {
     setOpenCategoryMenu(menuName === "category" && !openCategoryMenu);
   };
   const handleDeleteTask = async (id) => {
-    await axios.delete(`http://localhost:3003/tasks/${id}`);
     setTaskDetails(taskDetails.filter((task) => task.id !== id));
     setOpenRow(null);
+    await axios.delete(`https://project-data-fnc5.onrender.com/tasks/${id}`);
   };
   const handleTaskCreating = async (task) => {
-    await axios.post("http://localhost:3003/tasks", task);
+    await axios.post("https://project-data-fnc5.onrender.com/tasks", task);
     setTaskDetails([...taskDetails, task]);
     setOpenTaskForm(false);
     setResetTaskTable(!resetTaskTable);
   };
   const handleTaskChange = async (key, value) => {
-    await axios.put(`http://localhost:3003/tasks/${selectedRow.id}`, {
-      ...selectedRow,
-      [key]: value,
-    });
     setTaskDetails(
       taskDetails.map((task, index) => {
         if (index === openRow) {
@@ -123,6 +114,13 @@ function TaskBoard() {
       })
     );
     setOpenRow(null);
+    await axios.put(
+      `https://project-data-fnc5.onrender.com/tasks/${selectedRow.id}`,
+      {
+        ...selectedRow,
+        [key]: value,
+      }
+    );
   };
   return (
     <>
@@ -175,7 +173,7 @@ function TaskBoard() {
               </span>
             )}
           </div>
-          {taskDetails.length === 0 ? (
+          {taskDetails?.length === 0 ? (
             <p className="flex justify-center items-center">
               No tasks available. Please add tasks by clicking on the Add Task
             </p>
@@ -209,10 +207,15 @@ function TaskBoard() {
                         <span>Category</span> <RiExpandUpDownFill />
                       </div>
                     </th>
+                    <th>
+                      <div className="transition-all flex justify-start items-center gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
+                        Control Panel
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="relative ">
-                  {taskDetails.map((task, index) => (
+                  {taskDetails?.map((task, index) => (
                     <tr
                       className="border border-gray-800 text-sm hover:bg-slate-900 dark:hover:text-white"
                       key={index}
@@ -257,9 +260,9 @@ function TaskBoard() {
                         </div>
                       </td>
                       <td className="relative">
-                        <div className="flex justify-start text-xl">
+                        <div className="flex  text-xl">
                           <button
-                            className="hover:bg-slate-800 rounded-lg px-3 h-10 w-10  flex items-start justify-center"
+                            className="hover:bg-slate-800 px-3   rounded-lg h-10 w-10  flex items-start justify-end"
                             onClick={() => {
                               handleSelectingRow(index);
                             }}

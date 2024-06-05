@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const MyContext = createContext();
 
@@ -13,12 +14,27 @@ function Provider({ children }) {
   const [hiddenJobs, setHiddenJobs] = useState([]);
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:3000/cards");
+      const response = await axios.get(
+        "https://project-data-fnc5.onrender.com/cards"
+      );
+      console.log(response);
       setJobs(response.data);
     } catch (error) {
       console.log(error.message);
     }
   }, []);
+  const handleTaskDelete = async (jobId) => {
+    try {
+      await axios.delete(
+        `https://project-data-fnc5.onrender.com/cards/${jobId}`
+      );
+      fetchData();
+      toast.success("Job deleted successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to delete job");
+    }
+  };
   // Fetch data from the API and set the jobs state
   useEffect(() => {
     fetchData();
@@ -104,6 +120,7 @@ function Provider({ children }) {
     hiddenJobs,
     setHiddenJobs,
     fetchData,
+    handleTaskDelete,
   };
 
   return (

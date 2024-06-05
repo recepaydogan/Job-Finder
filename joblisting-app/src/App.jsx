@@ -1,6 +1,5 @@
 import "./App.css";
 import Header from "./components/Header";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";

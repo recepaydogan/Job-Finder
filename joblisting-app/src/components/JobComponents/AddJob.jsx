@@ -30,7 +30,10 @@ function AddJob() {
       }}
       onSubmit={(values) => {
         setTimeout(async () => {
-          await axios.post("http://localhost:3000/cards", values);
+          await axios.post(
+            "https://project-data-fnc5.onrender.com/cards",
+            values
+          );
           fetchData();
           navigate("/");
           toast.success("Job Created Successfully");
@@ -41,9 +44,10 @@ function AddJob() {
         jobTitle: yup
           .string()
           .required("Job Title is required")
-          .min(3, "minimum 3 characters"),
+          .min(3, "minimum 3 characters")
+          .max(30, "maximum 30 characters"),
         salary: yup
-          .string()
+          .number()
           .required("Salary is required")
           .min(5, "Minimum 5 characters"),
         experienceLevel: yup.string().required("Experience Level is required"),
@@ -53,10 +57,12 @@ function AddJob() {
         description: yup
           .string()
           .min(10, "Minimum 10 characters")
+          .max(50, "max 50 characters")
           .required("Description is required"),
         longDescription: yup
           .string()
           .min(10, "Minimum 20 Characters")
+          .max(200, "Maximum 200 characters")
           .required("Long Description is required "),
 
         company: yup.string().required("Company is required"),

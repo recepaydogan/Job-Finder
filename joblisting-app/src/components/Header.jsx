@@ -2,15 +2,18 @@
 
 import { useRef } from "react";
 import NavBar from "./NavBar";
+import { NavLink } from "react-router-dom";
 function Header() {
   const headerRef = useRef();
 
   return (
     <header
       ref={headerRef}
-      className="dark:bg-white dark:border-b-gray-400 border-b-[1px] grow top-0 sticky flex-wrap z-[100] mx-auto flex w-full bg-slate-950 justify-around items-center py-3 px-5"
+      className="dark:bg-white dark:border-b-gray-400 border-b-[1px]   flex-wrap z-[100] mx-auto flex  bg-slate-950 justify-around py-3 px-5"
     >
-      <h1 className="text-xl">Job Listing App</h1>
+      <NavLink to={"/"} className="text-xl flex items-center ">
+        Job Listing App
+      </NavLink>
       <NavBar headerRef={headerRef} />
     </header>
   );

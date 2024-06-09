@@ -42,7 +42,7 @@ function CustomSelect({
     <div ref={selectRef} className=" relative select-none cursor-pointer">
       <div
         onClick={() => setSelecting(!selecting)}
-        className=" dark:border-slate-950 dark:bg-slate-900  flex  w-full  justify-between  text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+        className=" dark:border-slate-950 dark:bg-slate-900  flex  w-full  justify-between  text-white border-[1px] border-gray-400   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
       >
         {selectedOption}
         <IoMdArrowDropdown />
@@ -61,7 +61,7 @@ function CustomSelect({
             selecting
               ? "opacity-100  "
               : "opacity-0 select-none pointer-events-none"
-          } dark:border-slate-950 dark:bg-white bg-slate-950 absolute w-full border-[1px] py-8 border-white/10 rounded-lg flex gap-3 flex-col px-3 mt-1 z-10  `}
+          } dark:border-slate-950 dark:bg-white bg-slate-950 absolute w-full border-[1px] py-8 border-gray-400 rounded-lg flex gap-3 flex-col px-3 mt-1 z-10  `}
         >
           {options.map((option, index) => (
             <div

@@ -182,18 +182,21 @@ function TaskBoard() {
               <table className="w-full caption-bottom table-fixed border ">
                 <thead>
                   <tr>
-                    <th onClick={() => handleSortFieldChange("title")}>
-                      <div className="transition-all flex items-center justify-start gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
+                    <th
+                      className=""
+                      onClick={() => handleSortFieldChange("title")}
+                    >
+                      <div className="transition-all flex items-center justify-start ml-2 py-3  cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
                         <span>Title </span> <RiExpandUpDownFill />
                       </div>
                     </th>
                     <th onClick={() => handleSortFieldChange("status")}>
-                      <div className="transition-all flex justify-start items-center gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
+                      <div className="transition-all flex justify-start items-center ml-2 py-3   cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
                         <span>Status</span> <RiExpandUpDownFill />
                       </div>
                     </th>
                     <th onClick={() => handleStatusSorting("priority")}>
-                      <div className="transition-all flex justify-start items-center gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
+                      <div className="transition-all flex justify-start items-center ml-2 py-3  cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
                         <span>Priority</span>
                         <RiExpandUpDownFill />
                       </div>
@@ -203,7 +206,7 @@ function TaskBoard() {
                         handleSortFieldChange("category");
                       }}
                     >
-                      <div className="transition-all flex justify-start items-center gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
+                      <div className="transition-all flex justify-start items-center py-3 ml-2 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
                         <span>Category</span> <RiExpandUpDownFill />
                       </div>
                     </th>
@@ -236,13 +239,16 @@ function TaskBoard() {
                       </td>
                       <td>
                         <div className="flex items-center  justify-start py-5 pl-3 gap-3">
-                          {task.priority === "High" ? (
-                            <HiMiniArrowSmallUp size={20} />
-                          ) : task.priority === "Medium" ? (
-                            <HiMiniArrowSmallLeft size={20} />
-                          ) : (
-                            <HiMiniArrowSmallDown size={20} />
-                          )}
+                          <span className="max-sm:hidden">
+                            {task.priority === "High" ? (
+                              <HiMiniArrowSmallUp size={20} />
+                            ) : task.priority === "Medium" ? (
+                              <HiMiniArrowSmallLeft size={20} />
+                            ) : (
+                              <HiMiniArrowSmallDown size={20} />
+                            )}
+                          </span>
+
                           {task.priority}
                         </div>
                       </td>

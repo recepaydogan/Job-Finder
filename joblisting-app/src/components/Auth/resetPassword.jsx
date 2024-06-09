@@ -58,7 +58,7 @@ function ResetPassword() {
                   <div>
                     <label htmlFor="">Email</label>
                     <input
-                      className="w-full mt-2 dark:border-gray-950 dark:text-black bg-transparent text-white border-[1px] border-white/10  px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="w-full mt-2 dark:border-gray-950 dark:text-black bg-transparent text-white border-[1px] border-gray-400  px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="email"
                       value={values.email}
                       name="email"

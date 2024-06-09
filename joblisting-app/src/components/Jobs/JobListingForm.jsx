@@ -49,7 +49,7 @@ function JobListingForm() {
             value={formData.title}
             onChange={handleChange}
             placeholder="Search for a job title"
-            className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+            className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-gray-400   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="text"
           />
         </div>
@@ -60,7 +60,7 @@ function JobListingForm() {
             value={formData.company}
             onChange={handleChange}
             placeholder="Search for a location"
-            className="dark:border-gray-950 dark:bg-slate-900    bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+            className="dark:border-gray-950 dark:bg-slate-900    bg-transparent text-white border-[1px] border-gray-400   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="text"
           />
         </div>
@@ -71,7 +71,7 @@ function JobListingForm() {
             value={formData.location}
             onChange={handleChange}
             placeholder="Search for a location"
-            className="dark:border-gray-950 dark:bg-slate-900   bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+            className="dark:border-gray-950 dark:bg-slate-900   bg-transparent text-white border-[1px] border-gray-400   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="text"
           />
         </div>
@@ -82,7 +82,7 @@ function JobListingForm() {
             value={formData.salary}
             onChange={handleChange}
             placeholder="Search for a min. salary"
-            className="dark:border-gray-950 dark:bg-slate-900    bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+            className="dark:border-gray-950 dark:bg-slate-900    bg-transparent text-white border-[1px] border-gray-400   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="number"
             min="0"
           />
@@ -112,7 +112,7 @@ function JobListingForm() {
                 name="showHiddenJobs"
                 value={formData.showHiddenJobs}
                 onChange={handleCheckBoxChange}
-                className="dark:checked:bg-slate-900 dark:after:text-white dark:text-white dark:border-gray-950 appearance-none relative after:absolute after:top-2/4 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2  after:text-black after:text-md checked:after:visible after:invisible after:content-['✓'] size-4 border-[1px]  checked:bg-white border-white/10"
+                className="dark:checked:bg-slate-900 dark:after:text-white dark:text-white dark:border-gray-950 appearance-none relative after:absolute after:top-2/4 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2  after:text-black after:text-md checked:after:visible after:invisible after:content-['✓'] size-4 border-[1px]  checked:bg-white border-gray-400"
                 type="checkbox"
                 checked={formData.showHiddenJobs}
               />
@@ -122,7 +122,7 @@ function JobListingForm() {
               <input
                 name="showFavorites"
                 onChange={handleCheckBoxChange}
-                className="dark:checked:bg-slate-900 dark:after:text-white dark:text-white dark:border-gray-950 appearance-none relative after:absolute after:top-2/4 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2  after:text-black after:text-md checked:after:visible after:invisible after:content-['✓'] size-4 border-[1px]  checked:bg-white border-white/10"
+                className="dark:checked:bg-slate-900 dark:after:text-white dark:text-white dark:border-gray-950 appearance-none relative after:absolute after:top-2/4 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2  after:text-black after:text-md checked:after:visible after:invisible after:content-['✓'] size-4 border-[1px]  checked:bg-white border-gray-400"
                 type="checkbox"
                 checked={formData.showFavorites}
               />

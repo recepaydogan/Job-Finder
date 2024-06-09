@@ -12,7 +12,7 @@ function HomePage() {
     toast.error("You need to login to add a job");
   }, []);
   return (
-    <main className="container mb-auto pb-20 mx-auto text-sm pt-5 relative ">
+    <main className="container mb-auto pb-20 max-sm:px-10 mx-auto text-sm pt-5 relative ">
       <section className="md:mx-28 mx-4">
         <h1 className="text-3xl font-semibold flex justify-between items-center gap-8 mb-8">
           Jobs

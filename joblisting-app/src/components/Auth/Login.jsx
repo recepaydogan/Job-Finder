@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { signIn, signInWithGoogle } from "../../firebase/auth.js";
 import useAuth from "../../authContexts/AuthContext.jsx";
 import { NavLink, Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
 function Login() {
   const { userLoggedIn } = useAuth();
 
@@ -17,7 +18,7 @@ function Login() {
           try {
             await signIn(values.email, values.password);
           } catch (error) {
-            alert(error.message);
+            toast.error("Invalid email or password");
           }
         }
       }}
@@ -34,7 +35,7 @@ function Login() {
                 <h1 className="text-center text-2xl">Log in</h1>
                 <label>Email</label>
                 <input
-                  className="w-full mt-2  dark:border-gray-950 dark:text-white   bg-transparent text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                  className="w-full mt-2  dark:border-gray-950 dark:text-white   bg-transparent text-white border-[1px] border-gray-400   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                   type="email"
                   value={values.email}
                   name="email"
@@ -43,7 +44,7 @@ function Login() {
                 <label className="mt-3">Password</label>
                 <input
                   autoComplete="off"
-                  className="w-full mt-2  dark:border-gray-950 dark:text-white   bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                  className="w-full mt-2  dark:border-gray-950 dark:text-white   bg-transparent text-white border-[1px] border-gray-400   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                   type="password"
                   value={values.password}
                   name="password"

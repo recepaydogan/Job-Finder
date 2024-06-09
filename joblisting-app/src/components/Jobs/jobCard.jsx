@@ -123,7 +123,7 @@ function JobCard({ job, isCreatingJob }) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <div className="fixed top-0 backdrop-blur  left-0  w-full h-full">
+        <div className="fixed top-0 backdrop-blur bg-slate-950/40  left-0  w-full h-full">
           <JobDetails job={job} setShowJobDetails={setShowJobDetails} />
         </div>
       </Transition>

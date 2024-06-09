@@ -47,7 +47,7 @@ function JobDetails({ job, setShowJobDetails }) {
   return (
     <>
       {loading && <Loading />}
-      <div className="flex justify-center min-h-fit  items-center h-full w-2/3 mx-auto">
+      <div className="flex justify-center min-h-fit max-sm:w-11/12 items-center h-full w-2/3 mx-auto">
         <div
           ref={jobDetailsRef}
           className="dark:text-white bg-slate-950 relative border-[1px] border-white/40  flex flex-col   min-h-fit  min-w-full  rounded-md px-10 py-8  "

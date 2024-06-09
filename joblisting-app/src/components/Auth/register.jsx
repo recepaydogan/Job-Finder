@@ -3,6 +3,7 @@ import * as yup from "yup";
 import { signUp } from "../../firebase/auth.js";
 import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../authContexts/AuthContext.jsx";
+import { toast } from "react-toastify";
 
 function Register() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ function Register() {
             navigate("/");
           } catch (error) {
             console.error(error.message);
+            toast.error("Email already exists");
           }
         }
       }}
@@ -62,7 +64,7 @@ function Register() {
                   <div>
                     <label htmlFor="">Email</label>
                     <input
-                      className="w-full mt-2  dark:border-gray-950   bg-transparent text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="w-full mt-2  dark:border-gray-950   bg-transparent text-white border-[1px] border-gray-400   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="email"
                       value={values.email}
                       name="email"
@@ -77,7 +79,7 @@ function Register() {
                     <label htmlFor="">Password</label>
                     <input
                       autoComplete="off"
-                      className="w-full mt-2  dark:border-gray-950   bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="w-full mt-2  dark:border-gray-950   bg-transparent text-white border-[1px] border-gray-400   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="password"
                       value={values.password}
                       name="password"
@@ -91,7 +93,7 @@ function Register() {
                     <label htmlFor="">Confirm Password</label>
                     <input
                       autoComplete="off"
-                      className="w-full mt-2  dark:border-gray-950   bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="w-full mt-2  dark:border-gray-950   bg-transparent text-white border-[1px] border-gray-400   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="password"
                       value={values.confirmPassword}
                       name="confirmPassword"

@@ -72,7 +72,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
               {isSubmitting && <Loading />}
               <div
                 ref={taskCreatingRef}
-                className="dark:bg-slate-100   bg-slate-950 py-32 border-[1px] border-white/40 w-6/12 rounded-lg relative "
+                className="dark:bg-slate-100   bg-slate-950 py-32 border-[1px] border-white/40 max-sm:w-11/12 max-md:w-9/12 max-lg:w-8/12 w-6/12 rounded-lg relative "
               >
                 <span
                   onClick={() => setOpenTaskForm(false)}
@@ -85,7 +85,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                     <div className="flex flex-col gap-2">
                       <label className="pl-2">Title</label>
                       <input
-                        className="w-full  dark:bg-slate-900 dark:border-gray-950    bg-transparent text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                        className="w-full  dark:bg-slate-900 dark:border-gray-950    bg-transparent text-white border-[1px] border-gray-400   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                         type="text"
                         name="title"
                         placeholder="Enter Task Title"

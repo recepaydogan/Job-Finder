@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import TaskBoard from "./components/Tasks/TaskBoard";
 import Login from "./components/Auth/Login";
 import useAuth from "./authContexts/AuthContext";
-import Register from "./components/Auth/Register";
+import Register from "./components/Auth/Register.jsx";
 import AddJob from "./components/Jobs/AddJob";
 import ResetPassword from "./components/Auth/ResetPassword";
 import HomePage from "./components/Home/HomePage";

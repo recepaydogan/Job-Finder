@@ -11,8 +11,10 @@ import { SlGraduation } from "react-icons/sl";
 import useClickOutside from "../../Helpers/useClickOutside.jsx/";
 import MyContext from "../../Context.jsx";
 import { Transition } from "@headlessui/react";
+import { toast } from "react-toastify";
 
 function JobDetails({ job, setShowJobDetails }) {
+  const { user } = useAuth();
   const { loading, setLoading } = useAuth();
   const [confirmationModal, setConfirmationModal] = useState(false);
   const { handleTaskDelete } = useContext(MyContext);
@@ -32,11 +34,16 @@ function JobDetails({ job, setShowJobDetails }) {
     };
   }, [setShowJobDetails]);
   const deleteTheTask = async () => {
+    if (!user) {
+      toast.error("You need to be logged in to delete a task");
+      return;
+    }
     setLoading(true);
     await handleTaskDelete(job.id);
     setShowJobDetails(false);
     setLoading(false);
   };
+  console.log(user);
   return (
     <>
       {loading && <Loading />}
@@ -100,13 +107,26 @@ function JobDetails({ job, setShowJobDetails }) {
             </div>
           </div>
           <div className="flex justify-end ">
-            <button
-              type="button"
-              onClick={() => setConfirmationModal((prev) => !prev)}
-              className="hover:bg-red-900 active:scale-95 text-end w-max px-4 py-2 rounded-md mt-3 bg-red-600 "
-            >
-              Delete This Task
-            </button>
+            {user === null ? (
+              <span
+                onClick={() =>
+                  toast.error("You need to be logged in to delete a task")
+                }
+                className="hover:bg-red-900 cursor-pointer active:scale-95 text-end w-max px-4 py-2 rounded-md mt-3 bg-red-600 "
+              >
+                Delete This Task
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setConfirmationModal((prev) => !prev);
+                }}
+                className="hover:bg-red-900 active:scale-95 text-end w-max px-4 py-2 rounded-md mt-3 bg-red-600 "
+              >
+                Delete This Task
+              </button>
+            )}
           </div>
           <Transition
             show={confirmationModal}

@@ -227,13 +227,15 @@ function TaskBoard() {
                       </td>
                       <td>
                         <div className="flex items-center  justify-start py-5 pl-3 gap-3">
-                          {task.status === "In Progress" ? (
-                            <MdOutlineTimer />
-                          ) : task.status === "Done" ? (
-                            <FaRegSquareCheck />
-                          ) : (
-                            <FaRegSquare />
-                          )}
+                          <span className="max-sm:hidden">
+                            {task.status === "In Progress" ? (
+                              <MdOutlineTimer />
+                            ) : task.status === "Done" ? (
+                              <FaRegSquareCheck />
+                            ) : (
+                              <FaRegSquare />
+                            )}
+                          </span>
                           <p>{task.status}</p>
                         </div>
                       </td>
@@ -251,11 +253,13 @@ function TaskBoard() {
                       </td>
                       <td>
                         <div className="flex items-center pl-3  py-5 justify-start gap-3">
-                          {task.category === "Personal" ? (
-                            <IoPersonSharp />
-                          ) : (
-                            <PiSuitcaseSimpleDuotone />
-                          )}
+                          <span className="max-sm:hidden">
+                            {task.category === "Personal" ? (
+                              <IoPersonSharp />
+                            ) : (
+                              <PiSuitcaseSimpleDuotone />
+                            )}
+                          </span>
                           <p>{task.category}</p>
                         </div>
                       </td>
@@ -325,7 +329,8 @@ function TaskBoard() {
                                 }}
                                 className="px-3 py-1 relative text-nowrap hover:bg-slate-800 cursor-pointer flex items-center justify-between"
                               >
-                                Priority <HiMiniArrowSmallRight />
+                                Priority
+                                <HiMiniArrowSmallRight />
                                 <Transition
                                   show={openPriorityMenu}
                                   enter="transition ease-out duration-100"

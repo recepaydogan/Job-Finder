@@ -17,7 +17,6 @@ function Provider({ children }) {
       const response = await axios.get(
         "https://project-data-fnc5.onrender.com/cards"
       );
-      console.log(response);
       setJobs(response.data);
     } catch (error) {
       console.log(error.message);

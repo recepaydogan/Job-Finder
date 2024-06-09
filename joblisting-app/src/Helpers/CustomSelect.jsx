@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
-import useClickOutside from "../CustomHooks/useClickOutside";
+import useClickOutside from "./useClickOutside";
 import { Transition } from "@headlessui/react";
 function CustomSelect({
   options,

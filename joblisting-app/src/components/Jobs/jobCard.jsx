@@ -79,10 +79,12 @@ function JobCard({ job, isCreatingJob }) {
 
     if (!jobExists) {
       setLikedJobs([...likedJobs, job]);
+      toast.success("Job added to favorites");
     } else if (jobExists) {
       const newLikedJobs = likedJobs.filter(
         (likedJob) => likedJob.id !== job.id
       );
+      toast.success("Job removed from favorites");
       setLikedJobs(newLikedJobs);
     }
   };

@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import Loading from "../Loading.jsx";
+import Loading from "../../Helpers/Loading.jsx";
 import useAuth from "../../authContexts/AuthContext.jsx";
 import {
   PiCalendarCheckBold,
   PiCurrencyCircleDollarBold,
 } from "react-icons/pi";
 import { SlGraduation } from "react-icons/sl";
-import useClickOutside from "../../CustomHooks/useClickOutside";
-import MyContext from "../../Context";
+import useClickOutside from "../../Helpers/useClickOutside.jsx/";
+import MyContext from "../../Context.jsx";
 import { Transition } from "@headlessui/react";
 
 function JobDetails({ job, setShowJobDetails }) {
@@ -130,7 +130,7 @@ function JobDetails({ job, setShowJobDetails }) {
                 </button>
                 <button
                   onClick={() => setConfirmationModal((prev) => !prev)}
-                  className="bg-green-600 hover:bg-green-700  active:scale-95 px-4 py-2 rounded-md"
+                  className=" bg-slate-800 hover:bg-slate-900  active:scale-95 px-4 py-2 rounded-md"
                 >
                   No
                 </button>

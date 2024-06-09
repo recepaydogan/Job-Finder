@@ -1,9 +1,9 @@
 import { useCallback } from "react";
-import JobCards from "./JobComponents/jobCards";
-import JobListingForm from "./JobComponents/JobListingForm";
+import JobCards from "../Jobs/jobCards";
+import JobListingForm from "../Jobs/JobListingForm";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
-import useAuth from "../authContexts/AuthContext";
+import useAuth from "../../authContexts/AuthContext";
 import { LuPlus } from "react-icons/lu";
 
 function HomePage() {
@@ -12,7 +12,7 @@ function HomePage() {
     toast.error("You need to login to add a job");
   }, []);
   return (
-    <main className="container mx-auto pb-20 text-sm pt-5 relative ">
+    <main className="container mb-auto pb-20 mx-auto text-sm pt-5 relative ">
       <section className="md:mx-28 mx-4">
         <h1 className="text-3xl font-semibold flex justify-between items-center gap-8 mb-8">
           Jobs

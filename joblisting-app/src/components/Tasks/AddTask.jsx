@@ -1,11 +1,11 @@
 // import { useState, useCallback } from "react";
-import CustomSelect from "../../Helpers/CustomSelect";
+import CustomSelect from "../../Helpers/CustomSelect/";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 import { Formik, Form, ErrorMessage, Field } from "formik";
 import { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import Loading from "../Loading";
+import Loading from "../../Helpers/Loading";
 import useAuth from "../../authContexts/AuthContext";
 
 const AddTask = ({ onsubmit, setOpenTaskForm }) => {
@@ -72,7 +72,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
               {isSubmitting && <Loading />}
               <div
                 ref={taskCreatingRef}
-                className="dark:bg-slate-100   bg-slate-950 py-32 border-[1px] border-white/40 w-9/12 rounded-lg relative "
+                className="dark:bg-slate-100   bg-slate-950 py-32 border-[1px] border-white/40 w-6/12 rounded-lg relative "
               >
                 <span
                   onClick={() => setOpenTaskForm(false)}
@@ -80,7 +80,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                 >
                   <IoMdClose size={28} />
                 </span>
-                <div className="flex w-full flex-col justify-center items-center ">
+                <div className="flex xl:w-3/4 w-full mx-auto flex-col justify-center items-center ">
                   <Form className="grid sm:grid-cols-1 md:grid-cols-2 px-16 w-full gap-2">
                     <div>
                       <label className="pl-2">Title</label>
@@ -162,7 +162,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                       ) : null}
                     </div>
                     <button
-                      className="dark:text-white md:col-span-2 w-1/3 max-md:w-1/2 mx-auto  bg-slate-900 cursor-pointer disabled:cursor-not-allowed px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95"
+                      className="dark:text-white whitespace-nowrap min-w-fit md:col-span-2 w-1/3 max-md:w-1/2 mx-auto  bg-slate-900 cursor-pointer disabled:cursor-not-allowed px-3 py-2 rounded-md mt-6 hover:bg-slate-800 hover:text-white active:scale-95"
                       type="submit"
                       disabled={isSubmitting}
                     >

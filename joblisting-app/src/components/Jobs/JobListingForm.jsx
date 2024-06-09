@@ -8,16 +8,16 @@ function JobListingForm() {
     location: "",
     salary: "",
     type: "",
+    company: "",
     experienceLevel: "",
     showHiddenJobs: false,
     showFavorites: false,
-    company: "",
   });
   // Handle form change
   const handleChange = (e) => {
-    const { name, value, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => {
-      return { ...prev, [name]: value || checked };
+      return { ...prev, [name]: value };
     });
   };
   // Handle job type change
@@ -39,7 +39,7 @@ function JobListingForm() {
   useEffect(() => {
     handleFormChange(formData);
   }, [formData, handleFormChange]);
-
+  console.log(formData.company);
   return (
     <>
       <form className="grid mt-6 grid-cols-3 max-md:grid-cols-1 max-lg:grid-cols-2 place-items-center gap-7 grid-rows-2  ">
@@ -85,6 +85,7 @@ function JobListingForm() {
             placeholder="Search for a min. salary"
             className="dark:border-gray-950 dark:bg-slate-900    bg-transparent text-white border-[1px] border-white/10   px-4 py-3 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
             type="number"
+            min="0"
           />
         </div>
         <div className="flex dark:text-black  flex-col gap-1 w-full">
@@ -139,9 +140,9 @@ function JobListingForm() {
                   salary: "",
                   type: "",
                   experienceLevel: "",
+                  company: "",
                   showHiddenJobs: false,
                   showFavorites: false,
-                  company: "",
                 });
               }}
               className="dark:bg-slate-950 active:scale-95 dark:hover:bg-black/80 dark:text-white py-2 px-4 rounded-md text-black font-semibold bg-white hover:bg-white/90"

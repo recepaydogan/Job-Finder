@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import MyContext from "../../Context";
 import { toast } from "react-toastify";
-import Loading from "../Loading";
+import Loading from "../../Helpers/Loading";
 import JobCard from "./jobCard";
 
 function AddJob() {
@@ -141,6 +141,7 @@ function AddJob() {
                       placeholder="Search for a min. salary"
                       className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="number"
+                      min="0"
                     />
                     {touched.salary && errors.salary && (
                       <p className="text-red-400 pl-2 absolute -bottom-7">

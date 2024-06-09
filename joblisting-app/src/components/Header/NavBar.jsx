@@ -1,21 +1,34 @@
 import { useState, useEffect, useRef } from "react";
-import { CiDark } from "react-icons/ci";
-import { CiLight } from "react-icons/ci";
+
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../authContexts/AuthContext";
-import { signOutUser } from "../firebase/auth";
+import useAuth from "../../authContexts/AuthContext";
+import { signOutUser } from "../../firebase/auth.js";
 import { ThreeDots } from "react-loader-spinner";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { CiMenuBurger } from "react-icons/ci";
 import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
-import useClickOutside from "../CustomHooks/useClickOutside";
-import { Transition } from "@headlessui/react";
+import useClickOutside from "../../Helpers/useClickOutside";
+
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+  Transition,
+} from "@headlessui/react";
+
+import { FaDesktop } from "react-icons/fa";
+import { HiSun } from "react-icons/hi";
+import { IoMoonSharp } from "react-icons/io5";
+
 const NavLinks = () => {
   const navigate = useNavigate();
   const { userLoggedIn, user, setLoading, loading } = useAuth();
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const menu = useRef();
+  const location = useLocation();
+
   useClickOutside({ itemRef: menu, setItem: setOpenUserMenu });
   const handleLogOut = async () => {
     setOpenUserMenu(false);
@@ -30,6 +43,8 @@ const NavLinks = () => {
   const userMenu = () => {
     setOpenUserMenu(!openUserMenu);
   };
+  useEffect(() => {}, [location]);
+
   return (
     <ul
       className={`${
@@ -37,23 +52,25 @@ const NavLinks = () => {
       } font-semibold flex gap-3 `}
     >
       <NavLink
-        className="dark:hover:bg-slate-950 transition-all dark:hover:text-white active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer    hover:bg-gray-800  outline-none "
+        {...(location.pathname === "/" && { "data-active": "true" })}
+        className="transition-all active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer outline-none data-[active]:pointer-events-none"
         to="/"
       >
-        Job Board
+        Jobs
       </NavLink>
 
       <NavLink
-        className="dark:hover:bg-slate-950 transition-all dark:hover:text-white active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer  hover:bg-gray-800   outline-none "
+        {...(location.pathname === "/todo-list" && { "data-active": "true" })}
+        className=" transition-all  active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer data-[active]:pointer-events-none outline-none  "
         to="/todo-list"
       >
-        Task List
+        Tasks
       </NavLink>
 
       {userLoggedIn ? (
         <div ref={menu} className="relative  ">
           <button
-            className="max-w-fit dark:bg-white dark:text-black dark:hover:bg-slate-900 dark:hover:text-white  flex items-center justify-center bg-slate-950 px-3 py-2 rounded-md hover:bg-slate-900 transition-colors"
+            className="max-w-fit dark:bg-white dark:text-black   flex items-center justify-center bg-slate-950 px-3 py-2 rounded-md  transition-colors"
             onClick={userMenu}
           >
             {user ? (
@@ -94,7 +111,7 @@ const NavLinks = () => {
         </div>
       ) : (
         <NavLink
-          className="dark:hover:bg-slate-950 dark:hover:text-white active:scale-95font-semibold px-3 py-2 rounded-lg cursor-pointer hover:ring-1  hover:bg-slate-700   outline-none "
+          className="active:scale-95font-semibold px-3 py-2 rounded-lg cursor-pointer outline-none "
           to="/log-in"
         >
           Login
@@ -104,7 +121,11 @@ const NavLinks = () => {
   );
 };
 function NavBar({ headerRef }) {
-  const [dark, setDark] = useState(false);
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme")
+      ? JSON.parse(localStorage.getItem("theme"))
+      : null
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [navBarWidth, setNavBarWidth] = useState(window.innerWidth);
   useClickOutside({ itemRef: headerRef, setItem: setIsOpen });
@@ -120,65 +141,84 @@ function NavBar({ headerRef }) {
       window.removeEventListener("resize", handleResize);
     };
   }, [navBarWidth]);
-
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
 
-  // Handle dark mode toggle
-  const handleDarkMode = () => {
-    const newDark = !dark;
-    setDark(newDark);
-    if (newDark) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-    localStorage.setItem("theme", JSON.stringify(newDark));
-  };
   // Check if dark mode is enabled and set the theme
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    const theme = storedTheme ? JSON.parse(storedTheme) : false;
-    setDark(theme);
-
-    if (theme) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
+    switch (theme) {
+      case true:
+        document.body.classList.add("dark");
+        localStorage.setItem("theme", true);
+        break;
+      case false:
+        document.body.classList.remove("dark");
+        localStorage.setItem("theme", false);
+        break;
+      case null:
+        document.body.classList.remove("dark");
+        localStorage.removeItem("theme");
+        break;
+      default:
+        break;
     }
-  }, []);
+  }, [theme]);
   const toggleNavBar = () => {
     setIsOpen(!isOpen);
   };
 
+  const themeOption = [
+    { value: true, label: "Light", icon: <HiSun /> },
+    { value: false, label: "Dark", icon: <IoMoonSharp /> },
+    { value: null, label: "System", icon: <FaDesktop /> },
+  ];
   return (
     <>
       <nav ref={navRef} className="min-w-fit justify-end items-center flex">
-        {dark ? (
-          <CiDark
-            onClick={handleDarkMode}
-            size={55}
-            className="dark:hover:bg-slate-950 transition-all  dark:hover:text-white active:scale-95  px-2 py-1 rounded-lg cursor-pointer   hover:ring-1   outline-none"
-          />
-        ) : (
-          <CiLight
-            onClick={handleDarkMode}
-            size={55}
-            className="dark:hover:bg-slate-950 transition-all dark:hover:text-white active:scale-95  px-2 py-1 rounded-lg cursor-pointer   hover:ring-1    outline-none"
-          />
-        )}
-
         <div className="flex max-sm:hidden justify-end  items-center w-full">
           <NavLinks />
         </div>
-
         <div
           onClick={toggleNavBar}
           className="hidden cursor-pointer hover:bg-white/10 active:scale-90 px-3 py-4  max-sm:block"
         >
           <CiMenuBurger size={20} />
-        </div>
+        </div>{" "}
+        <Listbox className="ml-3" onChange={setTheme} as="div" value={theme}>
+          <ListboxButton className="flex items-center text-xl">
+            {themeOption.map((option, index) => {
+              return (
+                option.value === theme && <div key={index}>{option.icon}</div>
+              );
+            })}
+          </ListboxButton>
+          <Transition
+            enter="transition-opacity duration-200"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-150"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <ListboxOptions
+              className="bg-slate-800 w-32 mt-3 p-2 select-none rounded-md cursor-pointer text-white list-none dark:shadow-lg dark:bg-gray-100 "
+              anchor="bottom"
+              as="li"
+            >
+              {themeOption.map((option, index) => {
+                return (
+                  <ListboxOption key={index} value={option.value}>
+                    <div className="flex divide-y divide-gray-400 px-2 py-2 w-full text-sm items-center  dark:text-slate-950">
+                      <div className="flex mr-3 text-lg ">{option.icon}</div>
+                      {option.label}
+                    </div>
+                  </ListboxOption>
+                );
+              })}
+            </ListboxOptions>
+          </Transition>
+        </Listbox>
       </nav>
       <AnimatePresence>
         {isOpen && navBarWidth < 641 && (

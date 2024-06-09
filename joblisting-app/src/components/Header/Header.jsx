@@ -9,10 +9,10 @@ function Header() {
   return (
     <header
       ref={headerRef}
-      className="dark:bg-white dark:border-b-gray-400 border-b-[1px]   flex-wrap z-[100] mx-auto flex  bg-slate-950 justify-around py-3 px-5"
+      className="dark:bg-white    flex-wrap z-[100] mx-auto flex  bg-slate-950 justify-around py-3 px-5"
     >
       <NavLink to={"/"} className="text-xl flex items-center ">
-        Job Listing App
+        Job & Task Handler
       </NavLink>
       <NavBar headerRef={headerRef} />
     </header>

@@ -207,11 +207,6 @@ function TaskBoard() {
                         <span>Category</span> <RiExpandUpDownFill />
                       </div>
                     </th>
-                    <th>
-                      <div className="transition-all flex justify-start items-center gap-3 px-4 py-3 cursor-pointer select-none text-slate-500 hover:text-slate-200 hover:bg-slate-900 w-fit">
-                        Control Panel
-                      </div>
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="relative ">

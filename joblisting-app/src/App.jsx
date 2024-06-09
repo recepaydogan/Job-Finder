@@ -3,12 +3,12 @@ import Header from "./components/Header/Header";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
-import TaskBoard from "./components/Tasks/TaskBoard/";
+import TaskBoard from "./components/Tasks/TaskBoard";
 import Login from "./components/Auth/Login";
 import useAuth from "./authContexts/AuthContext";
-import Register from "./components/Auth/Register/";
+import Register from "./components/Auth/Register";
 import AddJob from "./components/Jobs/AddJob";
-import ResetPassword from "./components/Auth/ResetPassword/";
+import ResetPassword from "./components/Auth/ResetPassword";
 import HomePage from "./components/Home/HomePage";
 import Loading from "./Helpers/Loading";
 

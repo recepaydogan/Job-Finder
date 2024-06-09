@@ -87,14 +87,14 @@ function AddJob() {
             ) : (
               <div className="container mx-auto">
                 <h2 className="text-center text-3xl mt-7 font-mono">ADD JOB</h2>
-                <Form className="grid min-h-fit gap-y-10 gap-x-7   mt-6 mx-32 py-10  grid-cols-3 max-md:grid-cols-1 max-lg:grid-cols-2 place-items-center  grid-rows-2  ">
+                <Form className="grid min-h-fit gap-y-10 gap-x-7   mt-6 mx-32 max-sm:mx-16 py-10  grid-cols-3 max-md:grid-cols-1 max-lg:grid-cols-2 place-items-center  grid-rows-2  ">
                   <div className="flex flex-col gap-1 w-full relative">
                     <label className="font-semibold">Title</label>
                     <Field
                       name="jobTitle"
                       onChange={handleChange}
                       placeholder="Search for a job title"
-                      className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-gray-400   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="text"
                     />
                     {touched.jobTitle && errors.jobTitle && (
@@ -109,7 +109,7 @@ function AddJob() {
                       name="company"
                       onChange={handleChange}
                       placeholder="Search for a job title"
-                      className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-gray-400   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="text"
                     />
                     {touched.company && errors.company && (
@@ -124,7 +124,7 @@ function AddJob() {
                       name="location"
                       onChange={handleChange}
                       placeholder="Search for a location"
-                      className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-gray-400    px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="text"
                     />
                     {touched.location && errors.location && (
@@ -139,7 +139,7 @@ function AddJob() {
                       name="salary"
                       onChange={handleChange}
                       placeholder="Search for a min. salary"
-                      className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="dark:border-gray-950 dark:bg-slate-900  bg-transparent text-white border-[1px] border-gray-400    px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="number"
                       min="0"
                     />
@@ -193,7 +193,7 @@ function AddJob() {
                       name="description"
                       onChange={handleChange}
                       placeholder="Type Your Description"
-                      className="dark:border-gray-950 h-10 overflow-hidden resize-none dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="dark:border-gray-950 h-10 overflow-hidden resize-none dark:bg-slate-900  bg-transparent text-white border-[1px] border-gray-400    px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                     />
                     {touched.description && errors.description && (
                       <p className="text-red-400 pl-2 absolute -bottom-7">
@@ -208,7 +208,7 @@ function AddJob() {
                       name="longDescription"
                       onChange={handleChange}
                       placeholder="Type Your Long Description"
-                      className="dark:border-gray-950 max-h-10 resize-none dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="dark:border-gray-950 max-h-10 resize-none dark:bg-slate-900  bg-transparent text-white border-[1px] border-gray-400   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                     />
                     {touched.longDescription && errors.longDescription && (
                       <p className="text-red-400 pl-2 absolute -bottom-7">
@@ -222,7 +222,7 @@ function AddJob() {
                       name="applicationUrl"
                       onChange={handleChange}
                       placeholder="Type Your Description"
-                      className="dark:border-gray-950 resize-none dark:bg-slate-900  bg-transparent text-white border-[1px] border-white/10   px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="dark:border-gray-950 resize-none dark:bg-slate-900  bg-transparent text-white border-[1px] border-gray-400    px-3 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                     />
                     {touched.applicationUrl && errors.applicationUrl && (
                       <p className="text-red-400 text-nowrap pl-2 absolute -bottom-8">

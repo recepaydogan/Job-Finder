@@ -43,7 +43,7 @@ function JobDetails({ job, setShowJobDetails }) {
     setShowJobDetails(false);
     setLoading(false);
   };
-  console.log(user);
+
   return (
     <>
       {loading && <Loading />}

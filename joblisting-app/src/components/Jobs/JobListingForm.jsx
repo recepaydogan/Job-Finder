@@ -39,7 +39,6 @@ function JobListingForm() {
   useEffect(() => {
     handleFormChange(formData);
   }, [formData, handleFormChange]);
-  console.log(formData.company);
   return (
     <>
       <form className="grid mt-6 grid-cols-3 max-md:grid-cols-1 max-lg:grid-cols-2 place-items-center gap-7 grid-rows-2  ">

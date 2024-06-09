@@ -82,7 +82,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                 </span>
                 <div className="flex xl:w-3/4 w-full mx-auto flex-col justify-center items-center ">
                   <Form className="grid sm:grid-cols-1 md:grid-cols-2 px-16 w-full gap-2">
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <label className="pl-2">Title</label>
                       <input
                         className="w-full  dark:bg-slate-900 dark:border-gray-950    bg-transparent text-white border-[1px] border-white/10   px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
@@ -99,7 +99,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                       ) : null}
                     </div>
 
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <label className="pl-2">Status</label>
                       <Field
                         name="status"
@@ -120,7 +120,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                         </p>
                       ) : null}
                     </div>
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <label className="pl-2">Priority</label>
                       <Field
                         name="priority"
@@ -141,7 +141,7 @@ const AddTask = ({ onsubmit, setOpenTaskForm }) => {
                         </p>
                       ) : null}
                     </div>
-                    <div>
+                    <div className="flex flex-col gap-2">
                       <label className="pl-2">Category</label>
                       <Field
                         name="category"

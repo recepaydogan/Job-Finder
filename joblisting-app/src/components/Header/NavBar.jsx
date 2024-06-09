@@ -43,7 +43,6 @@ const NavLinks = () => {
   const userMenu = () => {
     setOpenUserMenu(!openUserMenu);
   };
-  useEffect(() => {}, [location]);
 
   return (
     <ul

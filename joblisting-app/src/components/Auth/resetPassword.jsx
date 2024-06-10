@@ -45,20 +45,20 @@ function ResetPassword() {
     >
       {({ handleChange, handleSubmit, values, touched, errors }) => {
         return (
-          <>
+          <>  
             {userLoggedIn ? (
               navigate("/")
             ) : (
               <div className="w-full h-[85%] flex-col  flex mt-40 justify-center items-center ">
                 <form
                   onSubmit={handleSubmit}
-                  className="flex flex-col w-2/6 gap-5 py-8 px-10 bg-slate-900 max-sm:w-10/12 max-lg:w-2/4 max-xl:w-2/4 rounded-lg "
+                  className="flex flex-col w-2/6 text-white gap-5 py-8 px-10 bg-slate-900 max-sm:w-10/12 max-lg:w-2/4 max-xl:w-2/4 rounded-lg "
                 >
                   <h1 className="text-center text-2xl">Reset Password</h1>
                   <div>
                     <label htmlFor="">Email</label>
                     <input
-                      className="w-full mt-2 dark:border-gray-950 dark:text-black bg-transparent text-white border-[1px] border-gray-400  px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
+                      className="w-full mt-2 dark:border-gray-950  bg-transparent border-[1px] border-gray-400  px-4 py-2 rounded-lg focus-visible:ring-offset-8 focus-visible:outline-1"
                       type="email"
                       value={values.email}
                       name="email"

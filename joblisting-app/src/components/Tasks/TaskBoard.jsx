@@ -18,6 +18,8 @@ import { Transition } from "@headlessui/react";
 import DropdownTaskMenu from "../../Helpers/DropdownTaskMenu";
 import { useContext } from "react";
 import TasksContext from ".//..//..//TaskContext";
+import MyContext from "../../Context";
+import TaskBoardSkeleton from "./TaskBoardSkeleton";
 function TaskBoard() {
   const [isFieldSorted, setIsFieldSorted] = useState(false);
   const [openRow, setOpenRow] = useState(null);
@@ -28,9 +30,14 @@ function TaskBoard() {
   const [openTaskForm, setOpenTaskForm] = useState(false);
   const dropDownMenuRef = useRef();
   const { userLoggedIn } = useAuth();
-  const { taskDetails, setTaskDetails, setResetTaskTable, resetTaskTable } =
-    useContext(TasksContext);
-
+  const {
+    taskDetails,
+    setTaskDetails,
+    setResetTaskTable,
+    resetTaskTable,
+    isTaskLoading,
+  } = useContext(TasksContext);
+  const { isLoading } = useContext(MyContext);
   const handleSortFieldChange = (field) => {
     const isDataSortedBefore = !isFieldSorted;
     setIsFieldSorted(isDataSortedBefore);
@@ -122,6 +129,7 @@ function TaskBoard() {
       }
     );
   };
+  console.log(isTaskLoading);
   return (
     <>
       {openRow !== null && (
@@ -144,7 +152,7 @@ function TaskBoard() {
         </div>
       </Transition>
 
-      <main className="w-full pb-32 bg-slate-950 relative items-center gap-10 justify-center dark:bg-white">
+      <main className="w-full pb-32 ">
         <section className=" w-2/3 mx-auto max-md:w-11/12">
           <div className="flex text-sm items-center justify-around pb-4 select-none">
             <button
@@ -173,7 +181,7 @@ function TaskBoard() {
               </span>
             )}
           </div>
-          {taskDetails?.length === 0 ? (
+          {taskDetails?.length === 0 && !isTaskLoading ? (
             <p className="flex justify-center items-center">
               No tasks available. Please add tasks by clicking on the Add Task
             </p>
@@ -394,6 +402,7 @@ function TaskBoard() {
               </table>
             </div>
           )}
+          {isTaskLoading && <TaskBoardSkeleton />}
         </section>
       </main>
     </>

@@ -12,6 +12,7 @@ function Provider({ children }) {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [likedJobs, setLikedJobs] = useState([]);
   const [hiddenJobs, setHiddenJobs] = useState([]);
+  const [isJobLoading, setIsJobLoading] = useState(true);
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(
@@ -20,6 +21,8 @@ function Provider({ children }) {
       setJobs(response.data);
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setIsJobLoading(false);
     }
   }, []);
   const handleTaskDelete = async (jobId) => {
@@ -120,6 +123,7 @@ function Provider({ children }) {
     setHiddenJobs,
     fetchData,
     handleTaskDelete,
+    isJobLoading,
   };
 
   return (

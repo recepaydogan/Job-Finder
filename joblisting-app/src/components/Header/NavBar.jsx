@@ -48,11 +48,11 @@ const NavLinks = () => {
     <ul
       className={`${
         loading && "pointer-events-none"
-      } font-semibold flex gap-3 `}
+      } font-semibold flex gap-3 select-none `}
     >
       <NavLink
         {...(location.pathname === "/" && { "data-active": "true" })}
-        className="transition-all active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer outline-none data-[active]:pointer-events-none"
+        className="transition-all active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer outline-none data-[active]:text-gray-400 data-[active]:pointer-events-none"
         to="/"
       >
         Jobs
@@ -60,7 +60,7 @@ const NavLinks = () => {
 
       <NavLink
         {...(location.pathname === "/todo-list" && { "data-active": "true" })}
-        className=" transition-all  active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer data-[active]:pointer-events-none outline-none  "
+        className=" transition-all  active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer data-[active]:pointer-events-none data-[active]:text-gray-400  outline-none  "
         to="/todo-list"
       >
         Tasks

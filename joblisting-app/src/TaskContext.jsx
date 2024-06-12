@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 function TasksProvider({ children }) {
   const [taskDetails, setTaskDetails] = useState([]);
   const [resetTaskTable, setResetTaskTable] = useState(false);
+  const [isTaskLoading, setIsTaskLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
     try {
@@ -15,6 +16,8 @@ function TasksProvider({ children }) {
       setTaskDetails(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsTaskLoading(false);
     }
   }, []);
   useEffect(() => {
@@ -28,6 +31,7 @@ function TasksProvider({ children }) {
         setTaskDetails,
         resetTaskTable,
         setResetTaskTable,
+        isTaskLoading,
       }}
     >
       {children}

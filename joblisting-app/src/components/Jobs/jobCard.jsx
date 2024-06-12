@@ -14,10 +14,18 @@ import { SlGraduation } from "react-icons/sl";
 import { Transition } from "@headlessui/react";
 import MyContext from "../../Context";
 import JobDetails from "./JobDetails";
+import JobCardSkeleton from "./JobCardSkeleton";
 
 function JobCard({ job, isCreatingJob }) {
-  const { formData, likedJobs, setLikedJobs, setHiddenJobs, hiddenJobs } =
-    useContext(MyContext);
+  const {
+    formData,
+    likedJobs,
+    setLikedJobs,
+    setHiddenJobs,
+    hiddenJobs,
+    isLoading,
+  } = useContext(MyContext);
+
   const [showHiddenJobs, setShowHiddenJobs] = useState(formData.showHidden);
   const [isJobHidden, setIsJobHidden] = useState(
     hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id) || false
@@ -111,7 +119,7 @@ function JobCard({ job, isCreatingJob }) {
   useEffect(() => {
     setIsJobHidden(hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id));
   }, [hiddenJobs, job.id]);
-
+  console.log(isLoading);
   return (
     <>
       <Transition
@@ -127,80 +135,83 @@ function JobCard({ job, isCreatingJob }) {
           <JobDetails job={job} setShowJobDetails={setShowJobDetails} />
         </div>
       </Transition>
-
-      <div
-        className={`${
-          !isJobHidden || showHiddenJobs ? "flex" : "hidden text-gray-400"
-        } ${
-          isJobHidden ? "text-gray-400" : ""
-        } select-none  flex-col py-3 px-4  border-white/10 rounded-xl border-[1px] dark:border-slate-950`}
-      >
-        <div className="flex items-center justify-between ">
-          <div className="text-2xl text-wrap break-words max-w-80">
-            {job.jobTitle}
-          </div>
-          <div className="flex justify-center items-center">
-            <span
-              className={`${
-                isCreatingJob && "pointer-events-none"
-              } cursor-pointer  flex justify-center items-center  size-10 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
-              onClick={toggleVisibility}
-            >
-              {!isJobHidden ? (
-                <FaRegEye size={20} />
-              ) : (
-                <FaRegEyeSlash size={20} />
-              )}
-            </span>
-            <span
-              onClick={toggleLikedJobs}
-              className={`${
-                isCreatingJob && "pointer-events-none"
-              } cursor-pointer  flex justify-center items-center  size-10 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
-            >
-              {likedJobs.some((likedJob) => likedJob.id === job.id) ? (
-                <FcLike size={20} />
-              ) : (
-                <CiHeart size={20} />
-              )}
-            </span>
-          </div>
-        </div>
-        <div className="text-sm text-gray-400 dark:text-gray-800">
-          {job.company}
-        </div>
-        <div className="text-sm text-gray-400 dark:text-gray-800">
-          {job.location}
-        </div>
-        <div className="flex dark:text-black text-xs gap-2 items-center justify-start my-2">
-          <div className="  bg-slate-800 flex gap-1 items-center justify-center cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
-            <PiCurrencyCircleDollarBold className="" size={20} />
-            {Number(job.salary).toLocaleString()}
-          </div>
-          <div className="  bg-slate-800 flex gap-1 items-center justify-center cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
-            <PiCalendarCheckBold className="" size={20} />
-            {job.type}
-          </div>
-          <div className="  bg-slate-800 flex gap-1 items-center justify-center cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
-            <SlGraduation className="" size={20} />
-            {job.experienceLevel}
-          </div>
-        </div>
-        <div className="py-4 max-w-96">
-          <p className="break-words text-wrap">{job.description}</p>
-        </div>
+      {isLoading ? (
+        <JobCardSkeleton />
+      ) : (
         <div
-          onClick={() => setShowJobDetails(true)}
-          className="flex w-full justify-end"
+          className={`${
+            !isJobHidden || showHiddenJobs ? "flex" : "hidden text-gray-400"
+          } ${
+            isJobHidden ? "text-gray-400" : ""
+          } select-none  flex-col py-3 px-4  border-white/10 rounded-xl border-[1px] dark:border-slate-950`}
         >
-          <button
-            disabled={isCreatingJob}
-            className="dark:text-white text-sm border border-white/10 px-6 select-none py-1 rounded-md bg-slate-900 hover:bg-slate-800 transition-all"
+          <div className="flex items-center justify-between ">
+            <div className="text-2xl text-wrap break-words max-w-80">
+              {job.jobTitle}
+            </div>
+            <div className="flex justify-center items-center">
+              <span
+                className={`${
+                  isCreatingJob && "pointer-events-none"
+                } cursor-pointer  flex justify-center items-center  size-10 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
+                onClick={toggleVisibility}
+              >
+                {!isJobHidden ? (
+                  <FaRegEye size={20} />
+                ) : (
+                  <FaRegEyeSlash size={20} />
+                )}
+              </span>
+              <span
+                onClick={toggleLikedJobs}
+                className={`${
+                  isCreatingJob && "pointer-events-none"
+                } cursor-pointer  flex justify-center items-center  size-10 hover:bg-white/10 rounded-full dark:hover:bg-slate-900 dark:hover:text-white `}
+              >
+                {likedJobs.some((likedJob) => likedJob.id === job.id) ? (
+                  <FcLike size={20} />
+                ) : (
+                  <CiHeart size={20} />
+                )}
+              </span>
+            </div>
+          </div>
+          <div className="text-sm text-gray-400 dark:text-gray-800">
+            {job.company}
+          </div>
+          <div className="text-sm text-gray-400 dark:text-gray-800">
+            {job.location}
+          </div>
+          <div className="flex dark:text-black text-xs gap-2 items-center justify-start my-2">
+            <div className="  bg-slate-800 flex gap-1 items-center justify-center cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
+              <PiCurrencyCircleDollarBold className="" size={20} />
+              {Number(job.salary).toLocaleString()}
+            </div>
+            <div className="  bg-slate-800 flex gap-1 items-center justify-center cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
+              <PiCalendarCheckBold className="" size={20} />
+              {job.type}
+            </div>
+            <div className="  bg-slate-800 flex gap-1 items-center justify-center cursor-pointer dark:bg-gray-200 px-2 py-1 rounded-lg">
+              <SlGraduation className="" size={20} />
+              {job.experienceLevel}
+            </div>
+          </div>
+          <div className="py-4 max-w-96">
+            <p className="break-words text-wrap">{job.description}</p>
+          </div>
+          <div
+            onClick={() => setShowJobDetails(true)}
+            className="flex w-full justify-end"
           >
-            Details
-          </button>
+            <button
+              disabled={isCreatingJob}
+              className="dark:text-white text-sm border border-white/10 px-6 select-none py-1 rounded-md bg-slate-900 hover:bg-slate-800 transition-all"
+            >
+              Details
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

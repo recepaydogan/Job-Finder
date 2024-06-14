@@ -7,6 +7,9 @@ You can organize your tasks and filter and search for jobs
 
 https://github.com/recepaydogan/Job-Finder/assets/112197119/d0507ca3-86fe-47a2-a7c5-b35f1ddd5480
 
+account to log in:
+mail: 123@gmail.com
+password: 123456
 
 clone the project
 

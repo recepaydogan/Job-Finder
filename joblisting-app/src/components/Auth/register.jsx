@@ -68,6 +68,7 @@ function Register() {
                       type="email"
                       value={values.email}
                       name="email"
+                      placeholder="Enter your email"
                       onChange={handleChange}
                     />
                     {touched.email && errors.email && (
@@ -83,6 +84,7 @@ function Register() {
                       type="password"
                       value={values.password}
                       name="password"
+                      placeholder="Enter your password"
                       onChange={handleChange}
                     />
                     {touched.password && errors.password && (
@@ -97,6 +99,7 @@ function Register() {
                       type="password"
                       value={values.confirmPassword}
                       name="confirmPassword"
+                      placeholder="Confirm your password"
                       onChange={handleChange}
                     />
                     {touched.confirmPassword && errors.confirmPassword && (

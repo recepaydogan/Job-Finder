@@ -18,7 +18,6 @@ import { Transition } from "@headlessui/react";
 import DropdownTaskMenu from "../../Helpers/DropdownTaskMenu";
 import { useContext } from "react";
 import TasksContext from ".//..//..//TaskContext";
-import MyContext from "../../Context";
 import TaskBoardSkeleton from "./TaskBoardSkeleton";
 function TaskBoard() {
   const [isFieldSorted, setIsFieldSorted] = useState(false);
@@ -37,7 +36,6 @@ function TaskBoard() {
     resetTaskTable,
     isTaskLoading,
   } = useContext(TasksContext);
-  const { isLoading } = useContext(MyContext);
   const handleSortFieldChange = (field) => {
     const isDataSortedBefore = !isFieldSorted;
     setIsFieldSorted(isDataSortedBefore);
@@ -129,7 +127,6 @@ function TaskBoard() {
       }
     );
   };
-  console.log(isTaskLoading);
   return (
     <>
       {openRow !== null && (

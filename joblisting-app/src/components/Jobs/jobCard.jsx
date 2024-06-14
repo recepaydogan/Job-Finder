@@ -27,10 +27,13 @@ function JobCard({ job, isCreatingJob }) {
   } = useContext(MyContext);
 
   const [showHiddenJobs, setShowHiddenJobs] = useState(formData.showHidden);
+
   const [isJobHidden, setIsJobHidden] = useState(
     hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id) || false
   );
+
   const [showJobDetails, setShowJobDetails] = useState(false);
+
   useEffect(() => {
     if (formData) {
       setShowHiddenJobs(formData.showHiddenJobs);
@@ -38,11 +41,9 @@ function JobCard({ job, isCreatingJob }) {
   }, [job.id, formData]);
   // Hide or show job card
   const toggleVisibility = () => {
-    const isItHidden = hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id);
-
-    if (!isItHidden) {
+    if (!isJobHidden) {
       setHiddenJobs([...hiddenJobs, job]);
-    } else if (isItHidden) {
+    } else if (isJobHidden) {
       const newHiddenJobs = hiddenJobs.filter(
         (hiddenJob) => hiddenJob.id !== job.id
       );
@@ -52,9 +53,7 @@ function JobCard({ job, isCreatingJob }) {
   };
   // Toast notification
   const handleToastProcess = () => {
-    const newVisibility = isJobHidden;
-
-    if (!newVisibility) {
+    if (!isJobHidden) {
       toast(
         <div className="flex items-center justify-center py-3 px-2 gap-5 ">
           <div className="flex flex-col justify-center">
@@ -82,6 +81,7 @@ function JobCard({ job, isCreatingJob }) {
     localStorage.setItem("hiddenJobs", JSON.stringify(filteredHiddenJobs));
     setHiddenJobs(filteredHiddenJobs);
   };
+  // check if job is liked or not after clicking the like button
   const toggleLikedJobs = () => {
     const jobExists = likedJobs.some((likedJob) => likedJob.id === job.id);
 
@@ -96,30 +96,17 @@ function JobCard({ job, isCreatingJob }) {
       setLikedJobs(newLikedJobs);
     }
   };
-  // lOCAL STORAGE FOR LIKED JOBS AND HIDDEN JOBS
-  useEffect(() => {
-    const storedLikedJobs = localStorage.getItem("likedJobs");
-    if (storedLikedJobs) {
-      setLikedJobs(JSON.parse(storedLikedJobs));
-    }
-  }, [setLikedJobs]);
-  useEffect(() => {
-    const storedHiddenJobs = localStorage.getItem("hiddenJobs");
-    if (storedHiddenJobs) {
-      setHiddenJobs(JSON.parse(storedHiddenJobs));
-    }
-  }, [setHiddenJobs]);
-
+  // Save liked and hidden jobs to local storage
   useEffect(() => {
     localStorage.setItem("likedJobs", JSON.stringify(likedJobs));
   }, [likedJobs]);
   useEffect(() => {
     localStorage.setItem("hiddenJobs", JSON.stringify(hiddenJobs));
   }, [hiddenJobs]);
+  // uodate the isJobHidden state
   useEffect(() => {
     setIsJobHidden(hiddenJobs.some((hiddenJob) => hiddenJob.id === job.id));
   }, [hiddenJobs, job.id]);
-  console.log(isLoading);
   return (
     <>
       <Transition

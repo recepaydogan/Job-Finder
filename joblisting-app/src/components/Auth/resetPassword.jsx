@@ -45,7 +45,7 @@ function ResetPassword() {
     >
       {({ handleChange, handleSubmit, values, touched, errors }) => {
         return (
-          <>  
+          <>
             {userLoggedIn ? (
               navigate("/")
             ) : (
@@ -62,6 +62,7 @@ function ResetPassword() {
                       type="email"
                       value={values.email}
                       name="email"
+                      placeholder="Enter your email"
                       onChange={handleChange}
                     />
                     {touched.email && errors.email && (

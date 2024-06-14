@@ -13,6 +13,30 @@ function Provider({ children }) {
   const [likedJobs, setLikedJobs] = useState([]);
   const [hiddenJobs, setHiddenJobs] = useState([]);
   const [isJobLoading, setIsJobLoading] = useState(true);
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme")
+      ? JSON.parse(localStorage.getItem("theme"))
+      : null
+  );
+  // Check if dark mode is enabled and set the theme
+  useEffect(() => {
+    switch (theme) {
+      case true:
+        document.body.classList.add("dark");
+        localStorage.setItem("theme", true);
+        break;
+      case false:
+        document.body.classList.remove("dark");
+        localStorage.setItem("theme", false);
+        break;
+      case null:
+        document.body.classList.remove("dark");
+        localStorage.removeItem("theme");
+        break;
+      default:
+        break;
+    }
+  }, [theme]);
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(
@@ -49,11 +73,9 @@ function Provider({ children }) {
   // Filter jobs based on the form data
   useEffect(() => {
     let newDisplayedJobs = jobs;
-
     if (formData.showFavorites) {
       newDisplayedJobs = likedJobs;
     }
-
     setDisplayedJobs(newDisplayedJobs);
   }, [
     formData.showFavorites,
@@ -124,6 +146,8 @@ function Provider({ children }) {
     fetchData,
     handleTaskDelete,
     isJobLoading,
+    theme,
+    setTheme,
   };
 
   return (

@@ -39,6 +39,7 @@ function Login() {
                   type="email"
                   value={values.email}
                   name="email"
+                  placeholder="Enter your email"
                   onChange={handleChange}
                 />
                 <label className="mt-3">Password</label>
@@ -48,6 +49,7 @@ function Login() {
                   type="password"
                   value={values.password}
                   name="password"
+                  placeholder="Enter your password"
                   onChange={handleChange}
                 />
 

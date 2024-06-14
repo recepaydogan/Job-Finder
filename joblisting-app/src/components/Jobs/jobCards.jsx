@@ -8,7 +8,7 @@ function JobCards() {
   return (
     <>
       <div className="flex flex-col sm:grid gap-4 grid-cols-[repeat(auto-fill,minmax(370px,1fr))] mt-12 ">
-        {isJobLoading && <JobCardSkeleton skeletonCount={4} />}
+        {isJobLoading && <JobCardSkeleton skeletonCount={6} />}
         {filteredJobs.map((job, key) => (
           <JobCard job={job} key={key} />
         ))}

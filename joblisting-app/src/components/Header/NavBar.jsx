@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../authContexts/AuthContext";
@@ -21,6 +21,7 @@ import {
 import { FaDesktop } from "react-icons/fa";
 import { HiSun } from "react-icons/hi";
 import { IoMoonSharp } from "react-icons/io5";
+import MyContext from "../../Context.jsx";
 
 const NavLinks = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const NavLinks = () => {
     >
       <NavLink
         {...(location.pathname === "/" && { "data-active": "true" })}
-        className="transition-all active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer outline-none data-[active]:text-gray-400 data-[active]:pointer-events-none"
+        className="transition-all active:scale-95 font-semibold px-4 py-2  cursor-pointer outline-none data-[active]:scale-90 data-[active]:pointer-events-none"
         to="/"
       >
         Jobs
@@ -60,12 +61,11 @@ const NavLinks = () => {
 
       <NavLink
         {...(location.pathname === "/todo-list" && { "data-active": "true" })}
-        className=" transition-all  active:scale-95 font-semibold px-4 py-2 rounded-lg cursor-pointer data-[active]:pointer-events-none data-[active]:text-gray-400  outline-none  "
+        className=" transition-all  active:scale-95 font-semibold px-4 py-2  cursor-pointer data-[active]:pointer-events-none data-[active]:scale-90  outline-none  "
         to="/todo-list"
       >
         Tasks
       </NavLink>
-
       {userLoggedIn ? (
         <div ref={menu} className="relative  ">
           <button
@@ -120,16 +120,12 @@ const NavLinks = () => {
   );
 };
 function NavBar({ headerRef }) {
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme")
-      ? JSON.parse(localStorage.getItem("theme"))
-      : null
-  );
   const [isOpen, setIsOpen] = useState(false);
   const [navBarWidth, setNavBarWidth] = useState(window.innerWidth);
   useClickOutside({ itemRef: headerRef, setItem: setIsOpen });
   const location = useLocation();
   const navRef = useRef();
+  const { theme, setTheme } = useContext(MyContext);
   useEffect(() => {
     const handleResize = () => {
       setNavBarWidth(window.innerWidth);
@@ -144,25 +140,6 @@ function NavBar({ headerRef }) {
     setIsOpen(false);
   }, [location]);
 
-  // Check if dark mode is enabled and set the theme
-  useEffect(() => {
-    switch (theme) {
-      case true:
-        document.body.classList.add("dark");
-        localStorage.setItem("theme", true);
-        break;
-      case false:
-        document.body.classList.remove("dark");
-        localStorage.setItem("theme", false);
-        break;
-      case null:
-        document.body.classList.remove("dark");
-        localStorage.removeItem("theme");
-        break;
-      default:
-        break;
-    }
-  }, [theme]);
   const toggleNavBar = () => {
     setIsOpen(!isOpen);
   };

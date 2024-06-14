@@ -39,6 +39,7 @@ function JobDetails({ job, setShowJobDetails }) {
       return;
     }
     setLoading(true);
+    setConfirmationModal(false);
     await handleTaskDelete(job.id);
     setShowJobDetails(false);
     setLoading(false);

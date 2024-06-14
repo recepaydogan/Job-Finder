@@ -6,41 +6,22 @@ function TaskBoardSkeleton() {
     <main className="w-full  dark:bg-white">
       <div className="w-full border-gray-800 rounded-3xl">
         <table className=" w-full   caption-bottom table-fixed border ">
-          <thead className="text-left">
-            <tr>
-              <th>
-                <Skeleton height={30} width={100} />
-              </th>
-              <th>
-                <Skeleton height={30} width={100} />
-              </th>
-              <th>
-                <Skeleton height={30} width={100} />
-              </th>
-              <th>
-                <Skeleton height={30} width={100} />
-              </th>
-              <th>
-                <Skeleton height={30} width={100} />
-              </th>
-            </tr>
-          </thead>
           <tbody>
             {[...Array(5)].map((_, index) => (
-              <tr key={index}>
-                <td>
+              <tr className="border-b-[1px] border-gray-400 " key={index}>
+                <td className="py-2">
                   <Skeleton height={30} width={100} />
                 </td>
-                <td>
+                <td className="py-2">
                   <Skeleton height={30} width={100} />
                 </td>
-                <td>
+                <td className="py-2">
                   <Skeleton height={30} width={100} />
                 </td>
-                <td>
+                <td className="py-2">
                   <Skeleton height={30} width={100} />
                 </td>
-                <td>
+                <td className="py-2">
                   <Skeleton height={30} width={100} />
                 </td>
               </tr>

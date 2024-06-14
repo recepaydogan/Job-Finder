@@ -53,6 +53,5 @@ If you have any feedback, please contact me at raydogan208@gmail.com
   
 
 
-![Application Video](https://www.youtube.com/watch?v=D7xX2Yl_z5Q&t=180s)
 
   

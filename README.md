@@ -10,6 +10,7 @@ https://github.com/recepaydogan/Job-Finder/assets/112197119/d0507ca3-86fe-47a2-a
 account to log in:
 mail: 123@gmail.com
 password: 123456
+>> https://job-task-handler.netlify.app/
 
 clone the project
 
